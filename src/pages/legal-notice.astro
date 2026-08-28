@@ -1,0 +1,89 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import LegalStatusNotice from "../components/LegalStatusNotice.astro";
+import PendingSection from "../components/PendingSection.astro";
+
+// Structural draft only. What's pending and why is tracked in
+// AMAI.Licensing.Api/docs/legal/02-open-questions.md — cited here by number in comments, not
+// shown to visitors. Relevant here: LQ-01, LQ-02, LQ-03. LQ-01 (the legal entity itself)
+// blocks nearly this entire page — there is currently no registered company to name.
+// The one verified fact on this page is the support contact, F06 in
+// AMAI.Licensing.Api/docs/legal/01-source-map.md.
+---
+
+<Layout
+  title="Legal Notice — KLEPON"
+  description="Operator and contact information for the KLEPON website."
+>
+  <div class="mx-auto max-w-7xl">
+    <Nav />
+
+    <section class="px-8 py-16">
+      <div class="mx-auto max-w-3xl">
+        <span
+          class="mb-2.5 block text-label font-semibold uppercase tracking-wide text-accent-700"
+        >
+          Legal
+        </span>
+        <h1
+          class="mb-6 text-[2.25rem] font-semibold leading-[1.15] tracking-tight text-text"
+        >
+          Legal Notice
+        </h1>
+
+        <LegalStatusNotice
+          note="This page is normally where a company identifies itself — legal name, address, registration number. KLEPON is not yet registered as a legal entity in its own right, so nearly all of that is still open."
+        />
+
+        <div class="flex flex-col gap-8">
+          <!-- LQ-01: no confirmed legal entity, form, or registered address yet -->
+          <PendingSection title="Operator">
+            The legal entity operating KLEPON — its registered name, legal form, and
+            registered address — hasn't been finalized yet.
+          </PendingSection>
+
+          <div>
+            <h2 class="mb-2 font-heading text-lg font-semibold normal-case text-text">
+              Contact
+            </h2>
+            <p class="m-0 text-body leading-relaxed text-text/85">
+              <a href="mailto:support@klepon.systems">support@klepon.systems</a>
+            </p>
+          </div>
+
+          <!-- Depends on LQ-01 -->
+          <PendingSection title="Represented by">
+            Depends on who the legal entity's officers or representatives are, which depends
+            on the entity itself being settled first.
+          </PendingSection>
+
+          <!-- LQ-01 -->
+          <PendingSection title="Commercial register entry">
+            No commercial register entry exists yet — there is no registered company.
+          </PendingSection>
+
+          <!-- LQ-01 -->
+          <PendingSection title="VAT identification number">
+            Not applicable until the legal entity is registered.
+          </PendingSection>
+
+          <!-- LQ-02, and doc10 §9 Q8 (supervisory authority never confirmed) -->
+          <PendingSection title="Supervisory authority">
+            Depends on where KLEPON is legally established, and on which country's data
+            protection authority has jurisdiction — neither is settled yet.
+          </PendingSection>
+
+          <!-- Whether this even applies depends on LQ-01 (EU establishment?) and LQ-04 (consumer counterparty?) -->
+          <PendingSection title="Dispute resolution">
+            Whether an EU online dispute resolution notice is required here depends on where
+            KLEPON is established and who its customers legally are — both open questions.
+          </PendingSection>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+  </div>
+</Layout>

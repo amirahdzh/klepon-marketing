@@ -1,0 +1,114 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import LegalStatusNotice from "../components/LegalStatusNotice.astro";
+import PendingSection from "../components/PendingSection.astro";
+
+// Structural draft only. What's pending and why is tracked in
+// AMAI.Licensing.Api/docs/legal/02-open-questions.md — this page cites those questions by
+// number in comments so a future session can find the reasoning, but never shows the
+// internal LQ codes to a site visitor. Relevant here: LQ-01, LQ-02, LQ-04, LQ-10, LQ-11,
+// LQ-12, LQ-13, LQ-14. LQ-10 (the commercial model) is the single largest blocker — most
+// sections below can't be finished until that's decided.
+---
+
+<Layout
+  title="Terms of Use — KLEPON"
+  description="The terms governing use of KLEPON's tools and services."
+>
+  <div class="mx-auto max-w-7xl">
+    <Nav />
+
+    <section class="px-8 py-16">
+      <div class="mx-auto max-w-3xl">
+        <span
+          class="mb-2.5 block text-label font-semibold uppercase tracking-wide text-accent-700"
+        >
+          Legal
+        </span>
+        <h1
+          class="mb-6 text-[2.25rem] font-semibold leading-[1.15] tracking-tight text-text"
+        >
+          Terms of Use
+        </h1>
+
+        <LegalStatusNotice
+          note="Most sections below depend on decisions that haven't been made yet — principally what KLEPON costs and how it's sold. Where a decision is still open, that's stated plainly rather than filled in."
+        />
+
+        <div class="flex flex-col gap-8">
+          <!-- LQ-01 (legal entity), LQ-04 (individual vs. employer as customer) -->
+          <PendingSection title="1. Who this agreement is between">
+            The legal entity offering KLEPON, and whether the customer is you personally or
+            your employer, haven't been finalized yet.
+          </PendingSection>
+
+          <!-- LQ-12 (acceptance mechanism doesn't exist yet) -->
+          <PendingSection title="2. Accepting these terms">
+            How and when you agree to these terms — and how KLEPON records that you did —
+            hasn't been built yet.
+          </PendingSection>
+
+          <div>
+            <h2 class="mb-2 font-heading text-lg font-semibold normal-case text-text">
+              3. What KLEPON provides today
+            </h2>
+            <p class="m-0 text-body leading-relaxed text-text/85">
+              Access to KLEPON's tools is granted directly by KLEPON and activated through a
+              license tied to your account. There is currently no self-service way to
+              purchase a license — every license in use today was issued individually.
+            </p>
+          </div>
+
+          <!-- LQ-10: no commercial model exists yet (price, term, seat definition, refunds) -->
+          <PendingSection title="4. Fees and payment">
+            KLEPON does not currently sell licenses commercially, so there's no pricing,
+            billing term, or refund policy to state. This section will be written once a
+            commercial model exists.
+          </PendingSection>
+
+          <!-- LQ-11: single-active-session behavior — undecided whether intentional -->
+          <PendingSection title="5. Your account and access">
+            Whether a license is tied to one device at a time, and what that means for you if
+            you work across multiple machines, hasn't been decided as an intended product
+            behavior yet.
+          </PendingSection>
+
+          <div class="flex flex-col gap-3">
+            <h2 class="mb-0 font-heading text-lg font-semibold normal-case text-text">
+              6. Ending your access
+            </h2>
+            <p class="m-0 text-body leading-relaxed text-text/85">
+              Deleting your account removes your license immediately, and this cannot be
+              undone.
+            </p>
+            <!-- LQ-14: no refund/recourse policy possible without a commercial model (LQ-10) -->
+            <PendingSection title="What happens to a license you paid for">
+              There's no paid product yet, so this hasn't been decided. It will be settled
+              alongside the fees and payment section above.
+            </PendingSection>
+          </div>
+
+          <!-- LQ-13: no committed availability/support level -->
+          <PendingSection title="7. Availability and support">
+            KLEPON doesn't currently commit to an availability level or support response
+            time. Whether — and what — to commit to hasn't been decided.
+          </PendingSection>
+
+          <!-- LQ-02: governing law depends on the legal entity (LQ-01) -->
+          <PendingSection title="8. Governing law and disputes">
+            Depends on where KLEPON is legally established, which isn't settled yet.
+          </PendingSection>
+
+          <!-- Notification mechanism for future changes isn't decided either — don't invent one -->
+          <PendingSection title="9. Changes to these terms">
+            How KLEPON will notify you of future changes to these terms hasn't been decided.
+          </PendingSection>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+  </div>
+</Layout>

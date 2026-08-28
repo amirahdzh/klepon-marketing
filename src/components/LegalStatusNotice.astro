@@ -1,0 +1,24 @@
+---
+// Shared draft banner for legal pages whose content is still gated on an unresolved
+// business/legal decision. See AMAI.Licensing.Api/docs/legal/02-open-questions.md for the
+// full register of what's open and who owns each decision — don't restate that reasoning
+// here, just point at it from each page's own frontmatter comment.
+interface Props {
+  note?: string;
+}
+
+const { note } = Astro.props;
+---
+
+<div class="mb-10 rounded-2xl border border-accent-700/30 bg-accent-100 px-6 py-5">
+  <p class="m-0 text-label font-semibold uppercase tracking-wide text-accent-700">
+    Working draft — not yet in effect
+  </p>
+  <p class="m-0 mt-2 text-sm leading-relaxed text-text/85">
+    This page exists so the site's legal links resolve to something real instead of a dead
+    link. Sections below are marked wherever the actual content is still pending a decision
+    outside engineering. Nothing on this page is a binding legal document until that notice
+    is removed.
+  </p>
+  {note && <p class="m-0 mt-2 text-sm leading-relaxed text-text/85">{note}</p>}
+</div>

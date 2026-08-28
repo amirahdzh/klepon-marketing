@@ -1,0 +1,193 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import AboutCTA from "../components/AboutCTA.astro";
+import Footer from "../components/Footer.astro";
+
+const heroFacts = [
+  {
+    label: "Library",
+    value: "20+ step-by-step guides and walkthroughs",
+    icon: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
+  },
+  {
+    label: "Format",
+    value: "Short videos paired with written steps",
+    icon: '<rect x="2" y="5" width="15" height="14" rx="2"/><path d="m22 8-5 4 5 4V8z"/>',
+  },
+  {
+    label: "Cadence",
+    value: "New tutorials added as tools evolve",
+    icon: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  },
+];
+
+const tutorials = [
+  {
+    category: "Setup",
+    duration: "8 min",
+    title: "Getting Started with KLEPON",
+    body: "Install the toolset into Revit and connect it to your first project model.",
+  },
+  {
+    category: "Modelling",
+    duration: "12 min",
+    title: "Modelling Fire Systems Faster",
+    body: "Use the modelling tools to reduce repetitive actions across routing and devices.",
+  },
+  {
+    category: "Calculations",
+    duration: "15 min",
+    title: "Setting Up Hydraulic Calculations",
+    body: "Connect demand points and pipe networks for interactive, model-based calculations.",
+  },
+  {
+    category: "Fabrication",
+    duration: "10 min",
+    title: "Generating Pipe Fabrication Data",
+    body: "Produce prefab outputs, material lists, and procurement-ready information.",
+  },
+  {
+    category: "Documentation",
+    duration: "9 min",
+    title: "Building P&ID Diagrams Automatically",
+    body: "Generate system diagrams linked directly to live engineering data.",
+  },
+  {
+    category: "Documentation",
+    duration: "7 min",
+    title: "Managing Drawing Lists and Revisions",
+    body: "Keep sheet numbering and revision tracking consistent straight from the model.",
+  },
+];
+---
+
+<Layout
+  title="Tutorials — KLEPON"
+  description="Step-by-step guides and video walkthroughs for getting the most out of the KLEPON toolset, from installation to advanced workflows."
+>
+  <div class="mx-auto max-w-7xl">
+    <Nav />
+
+    <section
+      class="grid grid-cols-1 items-center gap-10 px-8 pb-16 pt-14 lg:grid-cols-12 lg:gap-x-14"
+    >
+      <div class="lg:col-span-6">
+        <span
+          class="mb-2.5 block text-label font-semibold uppercase tracking-wide text-accent-700"
+        >
+          Tutorials
+        </span>
+        <h1 class="mb-5 text-[2.75rem] leading-[1.1]">
+          Learn <span class="text-accent-700">KLEPON</span> at Your Own Pace
+        </h1>
+        <p class="max-w-[56ch] text-base leading-relaxed text-text/85">
+          Short, practical guides that walk through installation, daily
+          modelling workflows, and the details of every tool — written by the
+          engineers who build them.
+        </p>
+      </div>
+
+      <div class="lg:col-span-6">
+        <div class="relative overflow-hidden rounded-[2rem] bg-surface p-6 shadow-sm sm:p-8">
+          <svg
+            class="pointer-events-none absolute -right-10 -top-10 h-56 w-56 text-accent-700/[0.07]"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1"
+            aria-hidden="true"
+          >
+            <rect x="2" y="5" width="15" height="14" rx="2"></rect>
+            <path d="m22 8-5 4 5 4V8z"></path>
+          </svg>
+          <ul class="relative flex flex-col gap-6">
+            {
+              heroFacts.map((f) => (
+                <li class="flex items-start gap-4">
+                  <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-divider bg-bg shadow-sm">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="var(--color-accent-700)"
+                      stroke-width="1.5"
+                      aria-hidden="true"
+                      set:html={f.icon}
+                    />
+                  </span>
+                  <span>
+                    <span class="block text-micro font-semibold uppercase tracking-wide text-accent-700">
+                      {f.label}
+                    </span>
+                    <span class="block text-body leading-snug">{f.value}</span>
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <hr class="mx-8 h-px border-0 bg-divider" />
+
+    <section class="px-8 py-16">
+      <div class="mx-auto mb-10 max-w-3xl text-center">
+        <span
+          class="mb-2.5 block text-label font-semibold uppercase tracking-wide text-accent-700"
+        >
+          Guides
+        </span>
+        <h2 class="mb-3 text-[2rem]">
+          Tutorials for Every Tool
+        </h2>
+        <p class="text-body leading-relaxed text-text/85">
+          Start with the basics or jump to the workflow you need — every guide
+          is built around real project tasks.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          tutorials.map((t) => (
+            <a
+              href="#"
+              class="card flex flex-col items-start gap-3 p-5 text-text no-underline transition-shadow duration-200 hover:text-text hover:no-underline hover:shadow-elev-md"
+            >
+              <div class="flex w-full items-center justify-between gap-3 text-micro font-semibold uppercase tracking-wide">
+                <span class="text-accent-700">{t.category}</span>
+                <span class="text-text/50">{t.duration}</span>
+              </div>
+              <div class="font-heading text-lg font-semibold text-text">
+                {t.title}
+              </div>
+              <p class="m-0 flex-1 text-label opacity-80">{t.body}</p>
+              <span class="mt-1 inline-flex items-center gap-1.5 text-label font-semibold text-accent-700">
+                Watch tutorial
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h12"></path>
+                  <path d="m13 6 6 6-6 6"></path>
+                </svg>
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <AboutCTA />
+    <Footer />
+  </div>
+</Layout>

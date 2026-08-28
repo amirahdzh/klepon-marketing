@@ -1,0 +1,24 @@
+---
+/**
+ * Logomark — real vector, from Klepon_2026_Huisstijl_v02A's
+ * klepon-mark.svg (delivered 2026-08-28, replacing the earlier raster
+ * approximation). Renders in `currentColor`, so set text color on the
+ * wrapper to recolor it.
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<svg
+  viewBox="94.21 86.34 798.63 812"
+  fill="currentColor"
+  class={className}
+  aria-hidden="true"
+>
+  <path
+    d="M679.64 812.75L648.44 542.83L705.35 512.49L835.79 623.49L791.09 675.9L726.87 621.25L748.1 804.89ZM349.93 849.71L541.51 657.03L600.71 682.61L595.26 853.8L526.41 851.53L529.1 767.25L398.76 898.34ZM115.46 614.98L385.55 644.63L402.47 706.87L265.22 809.34L224.08 754.1L291.65 703.65L107.89 683.48ZM152.79 285.32L298.01 514.97L259.9 567L94.21 523.59L111.75 456.98L193.32 478.35L94.52 322.1ZM433.81 108.96L344.8 365.68L280.36 368.33L211 211.72L274.01 183.9L308.16 261L368.72 86.34ZM746.9 218.71L490.7 309.19L448.45 260.46L527.64 108.58L588.68 140.5L549.69 215.27L724.01 153.72ZM856.3 531.93L625.82 388.03L637.59 324.62L805.7 291.84L818.8 359.46L736.04 375.6L892.85 473.5Z"
+  ></path>
+</svg>

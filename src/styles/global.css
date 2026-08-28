@@ -1,0 +1,265 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700&family=Barlow+Condensed:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+/*
+ * 2026 rebrand, full rollout. Source: Klepon_2026_Huisstijl_v02A.pdf,
+ * confirmed as the final direction on 2026-08-28. Every page now uses this
+ * palette. The logo mark and full lockup are the real vectors
+ * (klepon-mark.svg / klepon-logo-mono.svg), delivered 2026-08-28.
+ *
+ * The old Industry steel-blue / Barlow-Condensed / square-corner system raw
+ * values are kept below as the --color-legacy-* and --font-legacy-* tokens
+ * (nothing currently reads them) purely as a record of the previous
+ * palette, not because any page still depends on them.
+ */
+@theme {
+  --color-bg: #f2f2f2;
+  --color-surface: #e9e9ea;
+  --color-divider: color-mix(in srgb, #002e3a 14%, transparent);
+
+  /* Core tokens now alias the brand values below, so every existing
+     text-accent-*, text-text, font-heading, and font-sans utility across
+     the site re-themes without needing markup changes. */
+  --color-text: var(--color-brand-navy);
+  --color-accent: var(--color-brand-green);
+  --color-accent-100: var(--color-brand-green-100);
+  --color-accent-200: var(--color-brand-green-200);
+  --color-accent-300: var(--color-brand-green-300);
+  --color-accent-400: var(--color-brand-green-400);
+  --color-accent-500: var(--color-brand-green-500);
+  --color-accent-600: var(--color-brand-green-600);
+  --color-accent-700: var(--color-brand-green-700);
+  --color-accent-800: var(--color-brand-green-800);
+  --color-accent-900: var(--color-brand-green-900);
+
+  --color-brand-bg: #f2f2f2;
+  --color-brand-navy: #002e3a;
+  --color-brand-navy-700: #0a3f4d;
+
+  /* #11A46E is the confirmed brand green — it's the literal fill color in
+     klepon-mark.svg / klepon-logo.svg (the real vector assets, delivered
+     2026-08-28), not a guess from the PDF render. It anchors step 600; the
+     rest of the ramp is built around it. */
+  --color-brand-green: #11a46e;
+  --color-brand-green-100: #e6f8ef;
+  --color-brand-green-200: #c2eeda;
+  --color-brand-green-300: #8fdfb9;
+  --color-brand-green-400: #55cb92;
+  --color-brand-green-500: #2bb87a;
+  --color-brand-green-600: #11a46e;
+  /* 700/800/900 step darker for body/label text color on a light ground,
+     where 600 alone is close to WCAG AA but 700 gives more margin. */
+  --color-brand-green-700: #0c7d55;
+  --color-brand-green-800: #095e40;
+  --color-brand-green-900: #06432d;
+
+  --font-sans: var(--font-brand);
+  --font-heading: var(--font-brand);
+  --font-brand: "Urbanist", system-ui, sans-serif;
+
+  /* Confirmed 2026-08-28, alongside the navy and green above. Orange/amber
+     are general-purpose secondary accents (data viz, illustration,
+     highlight moments) — explicitly not semantic error/warning colors.
+     None of the four are wired into any component yet; add them where a
+     specific use comes up rather than forcing them in speculatively. */
+  --color-brand-slate: #30383d;
+  --color-brand-teal: #40626c;
+  --color-brand-orange: #d95527;
+  --color-brand-amber: #d9a127;
+
+  /* Unused by any page — the old accent-2/neutral ramps and the Barlow
+     pairing, kept only as a record of the previous system. */
+  --color-legacy-accent: #5980a6;
+  --color-legacy-text: #1d1f20;
+  --color-accent-2: #728fab;
+  --color-accent-2-100: #eef6ff;
+  --color-accent-2-200: #d6ebff;
+  --color-accent-2-300: #bdd8f2;
+  --color-accent-2-400: #9ebbd8;
+  --color-accent-2-500: #7e9cb8;
+  --color-accent-2-600: #627d98;
+  --color-accent-2-700: #486077;
+  --color-accent-2-800: #314457;
+  --color-accent-2-900: #1f2d3a;
+  --color-neutral-100: #f5f5f8;
+  --color-neutral-200: #e7e7ea;
+  --color-neutral-300: #d4d4d7;
+  --color-neutral-400: #b7b7ba;
+  --color-neutral-500: #98989b;
+  --color-neutral-600: #7a7a7d;
+  --color-neutral-700: #5d5d60;
+  --color-neutral-800: #424244;
+  --color-neutral-900: #2b2b2d;
+  --font-legacy-sans: "Barlow", system-ui, sans-serif;
+  --font-legacy-heading: "Barlow Condensed", system-ui, sans-serif;
+
+  /* Density 0.85x is baked into the base unit: p-1 = 3.4px, p-4 = 13.6px, etc. */
+  --spacing: 0.2125rem;
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 7px;
+  /* --radius-2xl (1rem/16px) is Tailwind's own default, unmodified — reused
+     as-is by the soft-rounded card family below. */
+  --radius-3xl: 22px;
+
+  /*
+   * Type sizes below Tailwind's default scale that don't already have a
+   * matching token (text-sm/0.875rem/14px and text-base/1rem/16px are
+   * Tailwind defaults and are reused as-is, not redefined here). Named to
+   * match the hierarchy roles in DESIGN.md rather than by raw size, so a
+   * future palette/type swap can restyle a role without hunting pixel
+   * values across every page.
+   */
+  --text-body: 0.9375rem; /* 15px — Body */
+  --text-label: 0.8125rem; /* 13px — Label / Eyebrow */
+  --text-micro: 0.6875rem; /* 11px — Micro-label */
+  --text-micro-sm: 0.625rem; /* 10px — Micro-label, smaller variant in use */
+  --text-micro-xs: 0.5625rem; /* 9px — Micro-label, mobile-only smallest variant */
+
+  --shadow-elev-sm: 0 1px 2px color-mix(in srgb, #002e3a 10%, transparent);
+  --shadow-elev-md: 0 3px 10px color-mix(in srgb, #002e3a 12%, transparent);
+  --shadow-elev-lg: 0 12px 32px color-mix(in srgb, #002e3a 18%, transparent);
+}
+
+@layer base {
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+  }
+
+  a {
+    color: var(--color-accent-700);
+    text-decoration: none;
+    text-underline-offset: 3px;
+  }
+
+  a:hover {
+    color: var(--color-accent-900);
+    text-decoration: underline;
+  }
+
+  :focus {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-accent) 30%, transparent);
+  }
+}
+
+@layer components {
+  /*
+   * Buttons — pill-shaped. The primary is the one solid, brand-green object;
+   * secondary is an outline in the same ink used for body text.
+   */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: calc(var(--spacing) * 2);
+    cursor: pointer;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.2;
+    border-radius: 9999px;
+    border: 1px solid transparent;
+    padding: calc(var(--spacing) * 4) calc(var(--spacing) * 8);
+    transition: background-color 150ms ease, border-color 150ms ease;
+  }
+
+  .btn-sm {
+    font-size: 0.875rem;
+    padding: calc(var(--spacing) * 3) calc(var(--spacing) * 6);
+  }
+
+  .btn-lg {
+    font-size: 1.0625rem;
+    padding: calc(var(--spacing) * 4.5) calc(var(--spacing) * 9);
+  }
+
+  .btn-primary {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-text);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-accent-500);
+    border-color: var(--color-accent-500);
+  }
+
+  .btn-primary:active {
+    background: var(--color-accent-600);
+    border-color: var(--color-accent-600);
+  }
+
+  .btn-secondary {
+    color: var(--color-text);
+    background: transparent;
+    border-color: color-mix(in srgb, var(--color-text) 15%, transparent);
+  }
+
+  .btn-secondary:hover {
+    background: color-mix(in srgb, var(--color-text) 5%, transparent);
+  }
+
+  .btn-secondary:active {
+    background: color-mix(in srgb, var(--color-text) 10%, transparent);
+  }
+
+  /* Cards — soft, filled, generously rounded; shadow does the framing that
+     the old hairline-border/corner-mark system used to do. */
+  .card {
+    background: white;
+    border-radius: var(--radius-3xl);
+    box-shadow: var(--shadow-elev-sm);
+  }
+
+  /* The signature "premium panel" treatment from page 5 of the PDF
+     (Klepon_2026_Huisstijl_v02A) — a diagonal navy-to-green sweep. Reserved
+     for the dark navy panels (footer, CTA banners) rather than every
+     surface, so it stays a deliberate accent moment, not wallpaper. */
+  .bg-brand-gradient {
+    background: linear-gradient(
+      115deg,
+      var(--color-brand-navy) 0%,
+      var(--color-brand-navy) 58%,
+      color-mix(in srgb, var(--color-brand-navy) 30%, var(--color-brand-green)) 78%,
+      var(--color-brand-green) 100%
+    );
+  }
+
+  /* Same sweep, mirrored — for a panel whose white text sits on the left
+     (needs to stay in the navy zone) with the green brightening toward the
+     right instead. */
+  .bg-brand-gradient-rtl {
+    background: linear-gradient(
+      245deg,
+      var(--color-brand-navy) 0%,
+      var(--color-brand-navy) 58%,
+      color-mix(in srgb, var(--color-brand-navy) 30%, var(--color-brand-green)) 78%,
+      var(--color-brand-green) 100%
+    );
+  }
+}

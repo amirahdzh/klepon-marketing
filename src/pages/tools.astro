@@ -1,0 +1,393 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Button from "../components/Button.astro";
+import AboutCTA from "../components/AboutCTA.astro";
+import Footer from "../components/Footer.astro";
+
+const heroFacts = [
+  {
+    label: "Toolset",
+    value: "6 connected modules across the project lifecycle",
+    icon: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>',
+  },
+  {
+    label: "Data Source",
+    value: "One shared Revit model — no duplicate entry",
+    icon: '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/>',
+  },
+  {
+    label: "Delivery",
+    value: "From design through fabrication and handover",
+    icon: '<path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07l1.5-1.5"/>',
+  },
+];
+
+const tools = [
+  {
+    title: "Fire System Modelling Tools",
+    body: "Create, manage, and improve Revit-based fire protection models with tools designed to reduce repetitive actions and speed up daily modelling work.",
+    status: "Available",
+    icon: '<path d="M9 6h9a3 3 0 0 1 0 6h-9"/><path d="M9 12H6a3 3 0 0 0 0 6h9"/><circle cx="6" cy="6" r="1.5"/><circle cx="18" cy="18" r="1.5"/>',
+  },
+  {
+    title: "Interactive Hydraulic Calculations",
+    body: "Work with model-based hydraulic data, demand points, pipe networks, and calculation-ready information in a more visual, connected workflow.",
+    status: "Available",
+    icon: '<circle cx="12" cy="12" r="9"/><path d="M12 3a6 6 0 0 0 0 18"/><path d="M12 12v-5"/>',
+  },
+  {
+    title: "Pipe Fabrication & Procurement Tools",
+    body: "Generate structured pipe data, prefab outputs, material lists, and procurement information directly from the model.",
+    status: "Available",
+    icon: '<rect x="3" y="9" width="18" height="6" rx="1"/><path d="M7 9V7a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/><path d="M7 15v2a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-2"/>',
+  },
+  {
+    title: "P&ID Generator",
+    body: "Create clearer system diagrams and project documentation using automated workflows linked to real engineering data.",
+    status: "Available",
+    icon: '<circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7 7.5 10.5 16"/><path d="M17 7.5 13.5 16"/>',
+  },
+  {
+    title: "Drawing List Tools",
+    body: "Automatically generate and maintain drawing lists, sheet numbering, and revision tracking directly from the model.",
+    status: "Available",
+    icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h6"/>',
+  },
+  {
+    title: "Clash & Coordination Tools",
+    body: "Identify and resolve coordination issues across disciplines before they reach the field, directly from the fire system model.",
+    status: "Beta",
+    icon: '<path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/>',
+  },
+];
+
+// Design/Build split verified against the authoritative per-tool package
+// table (AMAI.Licensing.Api repo,
+// knowledge/Licensing/01-Package-Model-and-Tool-Reference.md, 2026-08-20).
+// P&ID Generator and Drawing List Tools (Export Schedule) are not
+// package-gated there — common tier, listed separately below rather than
+// claimed as a Design perk. Clash & Coordination Tools doesn't appear in
+// that reference at all, so it's dropped from the Design & Build list
+// rather than asserted as a confirmed exclusive.
+const packages = [
+  {
+    name: "Design",
+    price: "€200 / year",
+    tagline:
+      "Model, calculate, and document the fire protection system before anything gets built.",
+    features: ["Fire System Modelling Tools", "Interactive Hydraulic Calculations"],
+  },
+  {
+    name: "Build",
+    price: "€100 / year",
+    tagline:
+      "Turn an approved design into fabrication-ready, procurement-ready output.",
+    features: ["Pipe Fabrication & Procurement Tools"],
+  },
+  {
+    name: "Design & Build",
+    price: "€400 / year",
+    tagline: "The full toolset, from first model to field-ready output.",
+    accessNote:
+      "Shared by up to 2 users. Design and Build access can be assigned separately, so unused access stays available for another user.",
+    badge: "Full Toolset",
+    features: ["Everything in Design", "Everything in Build"],
+    highlight: true,
+  },
+];
+
+const includedInEveryPlan = [
+  "Core Revit modelling tools",
+  "P&ID Generator",
+  "Drawing List Tools",
+];
+
+const checkIcon = '<path d="M20 6 9 17l-5-5"/>';
+
+const steps = [
+  {
+    title: "Install Into Revit",
+    body: "Add KLEPON tools directly into your existing Revit environment — no separate software, no disruption to your current workflow.",
+    icon: '<path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/>',
+  },
+  {
+    title: "Work Inside Your Model",
+    body: "Use structured, model-based tools for calculations, fabrication data, and diagrams as you design — everything stays connected to one source.",
+    icon: '<path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/>',
+  },
+  {
+    title: "Export Construction-Ready Outputs",
+    body: "Generate schedules, material lists, and diagrams ready for procurement, fabrication, and installation, directly from the model.",
+    icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h6"/>',
+  },
+];
+---
+
+<Layout
+  title="Tools — KLEPON"
+  description="Explore the KLEPON toolset — connected Revit tools for fire system modelling, hydraulic calculations, fabrication data, and documentation."
+>
+  <div class="mx-auto max-w-7xl">
+    <Nav />
+
+    <section
+      class="grid grid-cols-1 items-center gap-10 px-8 pb-16 pt-14 lg:grid-cols-12 lg:gap-x-14"
+    >
+      <div class="lg:col-span-6">
+        <span
+          class="mb-2.5 block text-label font-semibold uppercase tracking-wide text-accent-700"
+        >
+          Tools
+        </span>
+        <h1 class="mb-5 text-[2.75rem] leading-[1.1]">
+          Fire Design <span class="text-accent-700">Tools</span> for Every Stage of
+          the Model
+        </h1>
+        <p class="max-w-[56ch] text-base leading-relaxed text-text/85">
+          KLEPON is a set of connected Revit tools built by fire protection
+          engineers — covering modelling, hydraulic calculations, fabrication
+          data, and documentation, all working from the same model.
+        </p>
+      </div>
+
+      <div class="lg:col-span-6">
+        <div class="relative overflow-hidden rounded-[2rem] bg-surface p-6 shadow-sm sm:p-8">
+          <svg
+            class="pointer-events-none absolute -right-10 -top-10 h-56 w-56 text-accent-700/[0.07]"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1"
+            aria-hidden="true"
+          >
+            <rect x="3" y="3" width="18" height="18"></rect>
+            <path d="M3 9h18M9 3v18"></path>
+          </svg>
+          <ul class="relative flex flex-col gap-6">
+            {
+              heroFacts.map((f) => (
+                <li class="flex items-start gap-4">
+                  <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-divider bg-bg shadow-sm">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="var(--color-accent-700)"
+                      stroke-width="1.5"
+                      aria-hidden="true"
+                      set:html={f.icon}
+                    />
+                  </span>
+                  <span>
+                    <span class="block text-micro font-semibold uppercase tracking-wide text-accent-700">
+                      {f.label}
+                    </span>
+                    <span class="block text-body leading-snug">{f.value}</span>
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <hr class="mx-8 h-px border-0 bg-divider" />
+
+    <section class="px-8 py-16">
+      <div class="mx-auto mb-10 max-w-3xl text-center">
+        <span
+          class="mb-2.5 block text-label font-semibold uppercase tracking-wide text-accent-700"
+        >
+          The Toolset
+        </span>
+        <h2 class="mb-3 text-[2rem]">
+          Every Tool Built Around Real Project Work
+        </h2>
+        <p class="text-body leading-relaxed text-text/85">
+          Each module is designed and tested by engineers who use it on live
+          fire protection projects — not built around generic software
+          assumptions.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          tools.map((t) => (
+            <div class="card flex flex-col items-start gap-2 p-5 transition-shadow duration-200 hover:shadow-elev-md">
+              <div class="flex w-full items-start justify-between gap-3">
+                <svg
+                  width="26"
+                  height="26"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="var(--color-accent-700)"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  set:html={t.icon}
+                />
+                <span
+                  class={`shrink-0 border px-2 py-0.5 text-micro-sm font-semibold uppercase tracking-wide ${
+                    t.status === "Beta"
+                      ? "border-accent-300 text-accent-700"
+                      : "border-divider text-text/60"
+                  }`}
+                >
+                  {t.status}
+                </span>
+              </div>
+              <div class="mt-1.5 font-heading text-lg font-semibold">
+                {t.title}
+              </div>
+              <p class="m-0 flex-1 text-label opacity-80">{t.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <hr class="mx-8 h-px border-0 bg-divider" />
+
+    <section class="px-8 py-16">
+      <div class="mx-auto mb-12 max-w-3xl text-center">
+        <span
+          class="mb-2.5 block text-label font-semibold uppercase tracking-wide text-accent-700"
+        >
+          How It Fits Together
+        </span>
+        <h2 class="text-[2rem]">
+          From Installation to Delivery
+        </h2>
+      </div>
+
+      <ol class="relative mx-auto flex max-w-2xl flex-col gap-10">
+        <div
+          class="absolute bottom-6 left-6 top-6 w-px bg-divider"
+          aria-hidden="true"
+        >
+        </div>
+        {
+          steps.map((step) => (
+            <li class="relative flex gap-5">
+              <div class="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-divider bg-surface shadow-sm">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="var(--color-accent-700)"
+                  stroke-width="1.5"
+                  aria-hidden="true"
+                  set:html={step.icon}
+                />
+              </div>
+              <div class="pt-2">
+                <h3 class="mb-1.5 text-lg normal-case">{step.title}</h3>
+                <p class="m-0 max-w-[55ch] text-body leading-relaxed text-text/85">
+                  {step.body}
+                </p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <hr class="mx-8 h-px border-0 bg-divider" />
+
+    <section class="px-8 py-16">
+      <div class="mx-auto mb-12 max-w-3xl text-center">
+        <span
+          class="mb-2.5 block text-label font-semibold uppercase tracking-wide text-accent-700"
+        >
+          Packages
+        </span>
+        <h2 class="mb-3 text-[2rem]">
+          Design, Build, Or Both
+        </h2>
+        <p class="text-body leading-relaxed text-text/85">
+          KLEPON is in closed beta — packages are provisioned per account, not
+          purchased through a self-service checkout. Get in touch and we'll set
+          your team up with the right one.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        {
+          packages.map((p) => (
+            <div
+              class={`card flex flex-col gap-5 p-6 sm:p-7 ${
+                p.highlight ? "ring-2 ring-accent" : ""
+              }`}
+            >
+              <div>
+                <div class="flex items-start justify-between gap-3">
+                  <h3 class="text-xl normal-case">{p.name}</h3>
+                  {p.badge && (
+                    <span class="shrink-0 border border-accent-300 px-2 py-0.5 text-micro-sm font-semibold uppercase tracking-wide text-accent-700">
+                      {p.badge}
+                    </span>
+                  )}
+                </div>
+                <p class="m-0 mt-3 font-heading text-2xl font-semibold text-accent-700">
+                  {p.price}
+                </p>
+                <p class="m-0 mt-2 text-label leading-relaxed opacity-80">
+                  {p.tagline}
+                </p>
+                {p.accessNote && (
+                  <p class="m-0 mt-3 border-t border-divider pt-3 text-label leading-relaxed text-accent-800">
+                    {p.accessNote}
+                  </p>
+                )}
+              </div>
+
+              <ul class="m-0 flex flex-1 flex-col gap-2.5 p-0">
+                {p.features.map((f) => (
+                  <li class="flex items-start gap-2.5">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="var(--color-accent-700)"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="mt-0.5 shrink-0"
+                      aria-hidden="true"
+                      set:html={checkIcon}
+                    />
+                    <span class="text-label leading-snug">{f}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <Button
+                variant={p.highlight ? "primary" : "secondary"}
+                size="md"
+                href={`mailto:support@klepon.systems?subject=${encodeURIComponent(
+                  `KLEPON ${p.name} access`,
+                )}`}
+              >
+                Request Access
+              </Button>
+            </div>
+          ))
+        }
+      </div>
+
+      <p class="mx-auto mt-8 max-w-2xl text-center text-label leading-relaxed text-text/70">
+        <span class="font-semibold text-accent-700">Included in every plan:</span>{" "}
+        {includedInEveryPlan.join(", ")}.
+      </p>
+    </section>
+
+    <AboutCTA />
+    <Footer />
+  </div>
+</Layout>

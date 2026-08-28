@@ -1,0 +1,32 @@
+---
+interface Props {
+  variant?: "primary" | "secondary";
+  size?: "sm" | "md" | "lg" | "xl";
+  href?: string;
+  class?: string;
+}
+
+const sizeClassMap = {
+  sm: "btn-sm text-sm",
+  md: "text-base",
+  lg: "btn-lg text-lg",
+  xl: "w-full min-w-0 text-lg py-4 px-8 sm:w-auto sm:px-10",
+} as const;
+
+const {
+  variant = "primary",
+  size = "md",
+  href,
+  class: className = "",
+} = Astro.props;
+const sizeClasses = sizeClassMap[size] ?? sizeClassMap.md;
+const classes = ["btn", `btn-${variant}`, sizeClasses, className]
+  .filter(Boolean)
+  .join(" ")
+  .trim();
+const Tag = href ? "a" : "button";
+---
+
+<Tag class={classes} href={href} type={href ? undefined : "button"}>
+  <slot />
+</Tag>

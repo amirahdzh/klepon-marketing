@@ -1,0 +1,442 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+
+const sections = [
+  { id: "scope", label: "1. Scope" },
+  { id: "controller", label: "2. Who we are" },
+  { id: "data-collected", label: "3. What data we collect" },
+  { id: "cookies", label: "4. Cookies" },
+  { id: "legal-basis", label: "5. Legal basis for processing" },
+  { id: "hosting", label: "6. Hosting and data location" },
+  { id: "backups", label: "7. Backups" },
+  { id: "rights", label: "8. Your rights" },
+  { id: "retention", label: "9. Data retention" },
+  { id: "security", label: "10. Security measures" },
+  { id: "third-parties", label: "11. Sub-processors / third parties" },
+  { id: "children", label: "12. Children's data" },
+  { id: "governing-law", label: "13. Governing law and jurisdiction" },
+  { id: "changes", label: "14. Changes to this policy" },
+];
+---
+
+<Layout
+  title="Privacy Policy — KLEPON"
+  description="How KLEPON's website and licensing API handle personal data."
+>
+  <div class="mx-auto max-w-7xl">
+    <Nav />
+
+    <section class="px-8 pt-14 pb-8">
+      <div class="mx-auto max-w-3xl">
+        <span
+          class="mb-2.5 block text-label font-semibold uppercase tracking-wide text-accent-700"
+        >
+          Legal
+        </span>
+        <h1
+          class="mb-4 text-[2.5rem] font-semibold leading-[1.15] tracking-tight text-text sm:text-[3rem]"
+        >
+          Privacy Policy
+        </h1>
+        <p class="m-0 text-sm leading-relaxed text-text/60">
+          Effective date: 12 August 2026
+        </p>
+      </div>
+    </section>
+
+    <hr class="mx-8 h-px border-0 bg-divider" />
+
+    <section class="px-8 py-10">
+      <div class="mx-auto max-w-3xl">
+        <div
+          class="mb-10 border-l-4 border-accent-700 bg-accent-100/60 p-5 text-sm leading-relaxed text-text/85"
+        >
+          This document describes what KLEPON's website and licensing API
+          actually do with personal data today — it is not an aspirational
+          policy, and it has not been reviewed by a lawyer. Sections marked
+          <strong>Unresolved</strong> below identify facts this document
+          cannot state yet — a placeholder has deliberately not been invented
+          to fill them.
+        </div>
+
+        <nav class="mb-12 text-label leading-relaxed" aria-label="Sections">
+          <div class="mb-2 font-semibold uppercase tracking-wide text-accent-700">
+            On this page
+          </div>
+          <ul class="grid grid-cols-1 gap-x-6 gap-y-1.5 sm:grid-cols-2">
+            {
+              sections.map((s) => (
+                <li>
+                  <a href={`#${s.id}`}>{s.label}</a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+
+        <div class="flex flex-col gap-12">
+          <div id="scope">
+            <h2 class="mb-3 font-heading text-xl font-semibold">1. Scope</h2>
+            <p class="mb-4 text-body leading-relaxed text-text/85">
+              This policy covers KLEPON as a product: the marketing website
+              you are reading now (<code>klepon.systems</code>), and the
+              licensing API and account/license data behind it.
+            </p>
+            <p class="m-0 text-body leading-relaxed text-text/85">
+              It does <strong>not yet</strong> cover the Revit plugin itself.
+              What the plugin installs, what it writes to your machine, and
+              whether it transmits any Revit model or project data have not
+              been verified and are not described here. This section will be
+              updated once that review happens.
+            </p>
+          </div>
+
+          <div id="controller">
+            <h2 class="mb-3 font-heading text-xl font-semibold">
+              2. Who we are
+            </h2>
+            <div
+              class="mb-4 border-l-4 border-accent-700 bg-accent-100/60 p-5 text-sm leading-relaxed text-text/85"
+            >
+              <strong>Unresolved — needs LQ-01.</strong> "KLEPON" is currently
+              a product/trading name, not a registered legal entity. This
+              section is missing the legal entity name and form, registered
+              address, and company registration / VAT number that a data
+              controller must be identified by. These have not been decided
+              and are not invented here.
+            </div>
+            <p class="m-0 text-body leading-relaxed text-text/85">
+              <strong>Contact for privacy requests:</strong>{" "}
+              <a href="mailto:support@klepon.systems">support@klepon.systems</a>
+            </p>
+          </div>
+
+          <div id="data-collected">
+            <h2 class="mb-3 font-heading text-xl font-semibold">
+              3. What data we collect
+            </h2>
+            <p class="mb-4 text-body leading-relaxed text-text/85">
+              The marketing site itself has no forms, no accounts, and no
+              analytics — it does not collect any personal data on its own.
+              Personal data is collected once you create an account with the
+              licensing API:
+            </p>
+            <div class="overflow-x-auto">
+              <table class="w-full border-collapse text-sm">
+                <thead>
+                  <tr class="border-b border-divider text-left">
+                    <th class="py-2 pr-4 font-semibold">Data</th>
+                    <th class="py-2 pr-4 font-semibold">Where it's stored</th>
+                    <th class="py-2 font-semibold">Why</th>
+                  </tr>
+                </thead>
+                <tbody class="text-text/80">
+                  <tr class="border-b border-divider align-top">
+                    <td class="py-2 pr-4">Email address (used as your login/username)</td>
+                    <td class="py-2 pr-4">Postgres, <code>AspNetUsers</code> table</td>
+                    <td class="py-2">Account identification, login</td>
+                  </tr>
+                  <tr class="border-b border-divider align-top">
+                    <td class="py-2 pr-4">Password</td>
+                    <td class="py-2 pr-4">Postgres, hashed (never stored in plain text)</td>
+                    <td class="py-2">Authentication</td>
+                  </tr>
+                  <tr class="border-b border-divider align-top">
+                    <td class="py-2 pr-4">Refresh token</td>
+                    <td class="py-2 pr-4">Postgres, SHA-256 hashed (never stored raw)</td>
+                    <td class="py-2">Keeping you signed in without re-entering your password</td>
+                  </tr>
+                  <tr class="border-b border-divider align-top">
+                    <td class="py-2 pr-4">License status, license key, issue/expiry dates</td>
+                    <td class="py-2 pr-4">Postgres, <code>Licenses</code> table</td>
+                    <td class="py-2">Enforcing and support-tracking your license</td>
+                  </tr>
+                  <tr class="align-top">
+                    <td class="py-2 pr-4">IP address</td>
+                    <td class="py-2 pr-4">Held only in server memory for rate limiting, never written to the database or logs</td>
+                    <td class="py-2">Blocking brute-force login attempts</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="m-0 mt-4 text-body leading-relaxed text-text/85">
+              We do not collect names, phone numbers, payment details, or any
+              usage/analytics data.
+            </p>
+          </div>
+
+          <div id="cookies">
+            <h2 class="mb-3 font-heading text-xl font-semibold">
+              4. Cookies and similar technologies
+            </h2>
+            <p class="mb-4 text-body leading-relaxed text-text/85">
+              The marketing site is a static Astro site and sets no cookies of
+              its own — no analytics or tracking scripts run anywhere on it.
+            </p>
+            <p class="mb-4 text-body leading-relaxed text-text/85">
+              The licensing API's browser-based Admin Portal (staff only) sets
+              a session cookie (<code>HttpOnly</code>,{" "}
+              <code>SameSite=Strict</code>, 8-hour sliding expiry), and its
+              form pages set a standard antiforgery cookie. Neither is set for
+              regular website visitors or plugin users.
+            </p>
+            <p class="m-0 text-body leading-relaxed text-text/85">
+              Our position is that these are strictly-necessary cookies and
+              that no consent banner is required for them — but that is an
+              engineering assessment, not a confirmed legal conclusion.
+            </p>
+          </div>
+
+          <div id="legal-basis">
+            <h2 class="mb-3 font-heading text-xl font-semibold">
+              5. Legal basis for processing
+            </h2>
+            <p class="mb-4 text-body leading-relaxed text-text/85">
+              This is engineering's draft classification for internal/legal
+              review, not a final legal determination:
+            </p>
+            <ul class="m-0 flex list-disc flex-col gap-3 pl-5 text-body leading-relaxed text-text/85">
+              <li>
+                <strong>Performance of a contract</strong> — creating your
+                account, authenticating you, and issuing/validating your
+                license, since these are necessary to provide the service you
+                signed up for.
+              </li>
+              <li>
+                <strong>Legal obligation</strong> — the self-service data
+                export and account deletion features exist because GDPR
+                requires offering them (Articles 15 and 17), not because the
+                service needs them to function.
+              </li>
+              <li>
+                <strong>Legitimate interest</strong> — IP-based rate limiting
+                and account lockout exist to protect accounts from
+                credential-stuffing and brute-force attacks. This
+                classification, along with backups and internal admin-tool
+                access, is still a draft pending an actual documented
+                balancing test.
+              </li>
+            </ul>
+          </div>
+
+          <div id="hosting">
+            <h2 class="mb-3 font-heading text-xl font-semibold">
+              6. Hosting and data location
+            </h2>
+            <p class="mb-2 text-body font-medium leading-relaxed text-text">
+              Marketing website
+            </p>
+            <p class="mb-4 text-body leading-relaxed text-text/85">
+              This site is hosted on <strong>Vercel</strong>, which receives
+              visitor IP addresses and request logs as part of normal web
+              hosting and content delivery.
+            </p>
+            <div
+              class="mb-6 border-l-4 border-accent-700 bg-accent-100/60 p-5 text-sm leading-relaxed text-text/85"
+            >
+              <strong>Unresolved.</strong> Whether Vercel's handling of this
+              data requires a data processing agreement, and whether it is
+              processed or stored outside the EU, has not yet been confirmed
+              with legal. We are not asserting either way — see Vercel listed
+              as a sub-processor in Section 11.
+            </div>
+            <p class="mb-2 text-body font-medium leading-relaxed text-text">
+              Licensing API and database
+            </p>
+            <ul class="m-0 flex list-disc flex-col gap-3 pl-5 text-body leading-relaxed text-text/85">
+              <li>
+                The API and its Postgres database run on a single{" "}
+                <strong>Hetzner Cloud VPS</strong> in{" "}
+                <strong>Falkenstein, Germany</strong> (EU) — no other hosting
+                region is used for these.
+              </li>
+              <li>
+                The database is self-hosted on that VPS (Docker, bound to{" "}
+                <code>localhost</code> only, not exposed to the internet
+                directly). No third-party managed-database provider has access
+                to the data.
+              </li>
+              <li>
+                The API is reachable over HTTPS at{" "}
+                <code>api.klepon.systems</code>, TLS-terminated by Caddy on
+                the same VPS.
+              </li>
+              <li>
+                DNS is managed through Combell, which only ever sees DNS
+                queries for the domain, never account data.
+              </li>
+              <li>
+                No personal data processed by the API or database leaves the
+                EU as part of normal operation.
+              </li>
+            </ul>
+          </div>
+
+          <div id="backups">
+            <h2 class="mb-3 font-heading text-xl font-semibold">
+              7. Backups
+            </h2>
+            <ul class="m-0 flex list-disc flex-col gap-3 pl-5 text-body leading-relaxed text-text/85">
+              <li>
+                The VPS runs a nightly automated backup (<code>pg_dump</code>,
+                gzip) with <strong>7-day retention</strong>, stored on the
+                same VPS in Germany.
+              </li>
+              <li>
+                A second copy is sent nightly to a Hetzner Storage Box in
+                Falkenstein, Germany — the same provider and country as the
+                server itself. Its contents are encrypted before it leaves the
+                server, so the storage service cannot read what is in it.
+                Retention is the same 7-day window.
+              </li>
+              <li>
+                Both copies are in Germany. No backup of this database is held
+                outside the EU.
+              </li>
+              <li>
+                Because both are bounded to 7 days, a deleted account's data
+                does not persist in backups beyond that window.
+              </li>
+            </ul>
+          </div>
+
+          <div id="rights">
+            <h2 class="mb-3 font-heading text-xl font-semibold">
+              8. Your rights
+            </h2>
+            <p class="mb-4 text-body leading-relaxed text-text/85">
+              You can exercise the following directly through the API — both
+              are authenticated HTTP calls, with no separate user interface
+              today:
+            </p>
+            <ul class="m-0 flex list-disc flex-col gap-3 pl-5 text-body leading-relaxed text-text/85">
+              <li>
+                <strong>Right to access (export your data):</strong>{" "}
+                <code>GET /api/auth/me/export</code>, authenticated as
+                yourself. Returns your email, account status, and your
+                license and session (refresh token) records.
+              </li>
+              <li>
+                <strong>Right to erasure (delete your account):</strong>{" "}
+                <code>DELETE /api/auth/me</code>, authenticated as yourself.
+                Permanently deletes your account, license, and session
+                records from the live database immediately, with no
+                confirmation step and no undo (see Section 7 for the backup
+                caveat).
+              </li>
+              <li>
+                <strong>Right to rectification</strong> (e.g. correcting your
+                email): not currently self-service — contact us using the
+                details in Section 2.
+              </li>
+            </ul>
+            <p class="m-0 mt-4 text-body leading-relaxed text-text/85">
+              There is no cost to exercising these rights. If you cannot use
+              the API directly, contact us using the details in Section 2 and
+              we will action the request manually.
+            </p>
+          </div>
+
+          <div id="retention">
+            <h2 class="mb-3 font-heading text-xl font-semibold">
+              9. Data retention
+            </h2>
+            <ul class="m-0 flex list-disc flex-col gap-3 pl-5 text-body leading-relaxed text-text/85">
+              <li>Account, license, and session data is kept for as long as your account exists.</li>
+              <li>
+                There is no automatic deletion of inactive accounts or expired
+                licenses today — data is retained until you delete your
+                account yourself, or ask us to.
+              </li>
+              <li>See Section 7 for how long deleted data can persist in backups.</li>
+            </ul>
+          </div>
+
+          <div id="security">
+            <h2 class="mb-3 font-heading text-xl font-semibold">
+              10. Security measures
+            </h2>
+            <ul class="m-0 flex list-disc flex-col gap-3 pl-5 text-body leading-relaxed text-text/85">
+              <li>Passwords are never stored or logged in plain text.</li>
+              <li>Refresh tokens are stored as SHA-256 hashes, not the raw token.</li>
+              <li>All traffic to the API and website is encrypted in transit (TLS/HTTPS).</li>
+              <li>Login is rate-limited by IP and accounts lock out after repeated failed attempts.</li>
+              <li>
+                The VPS only allows key-based SSH access from an
+                administrative account; root login and password
+                authentication are disabled.
+              </li>
+            </ul>
+          </div>
+
+          <div id="third-parties">
+            <h2 class="mb-3 font-heading text-xl font-semibold">
+              11. Sub-processors / third parties
+            </h2>
+            <ul class="m-0 flex list-disc flex-col gap-3 pl-5 text-body leading-relaxed text-text/85">
+              <li>
+                <strong>Vercel</strong> — hosts and serves this marketing
+                website; receives visitor IP addresses and request logs.
+                Whether a data processing agreement is required is
+                unresolved (see Section 6).
+              </li>
+              <li><strong>Hetzner Online GmbH</strong> — infrastructure hosting for the API, database, and backups (Germany).</li>
+              <li><strong>Combell</strong> — DNS resolution for <code>api.klepon.systems</code> (Belgium).</li>
+            </ul>
+            <p class="m-0 mt-4 text-body leading-relaxed text-text/85">
+              No other third party has access to account or license data. No
+              AI assistant, including tools used by developers to build and
+              maintain this codebase, is granted access to the production
+              system or to real user data.
+            </p>
+          </div>
+
+          <div id="children">
+            <h2 class="mb-3 font-heading text-xl font-semibold">
+              12. Children's data
+            </h2>
+            <p class="m-0 text-body leading-relaxed text-text/85">
+              KLEPON is professional engineering software and is not directed
+              at, or knowingly used by, children.
+            </p>
+          </div>
+
+          <div id="governing-law">
+            <h2 class="mb-3 font-heading text-xl font-semibold">
+              13. Governing law and jurisdiction
+            </h2>
+            <div
+              class="border-l-4 border-accent-700 bg-accent-100/60 p-5 text-sm leading-relaxed text-text/85"
+            >
+              <strong>Unresolved — needs LQ-02.</strong> The governing law,
+              jurisdiction, and whether a DPO or Art. 27 representative is
+              required have not been determined, and follow from the entity
+              question in Section 2. The hosting location (Germany) is not
+              necessarily the same as the entity's jurisdiction of
+              establishment, so it is not used as a stand-in here.
+            </div>
+          </div>
+
+          <div id="changes">
+            <h2 class="mb-3 font-heading text-xl font-semibold">
+              14. Changes to this policy
+            </h2>
+            <p class="mb-4 text-body leading-relaxed text-text/85">
+              This document is updated whenever what the website or API
+              actually does changes.
+            </p>
+            <ul class="m-0 flex list-disc flex-col gap-2 pl-5 text-sm leading-relaxed text-text/70">
+              <li>2026-08-12 — Scope widened from the licensing API alone to the KLEPON product (website + API); Vercel added as a disclosed sub-processor for the website.</li>
+              <li>2026-08-11 — Off-site backup destination established (Section 7).</li>
+              <li>2026-08-07 — Privacy contact moved to a dedicated address.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+  </div>
+</Layout>
