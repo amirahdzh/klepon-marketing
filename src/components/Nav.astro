@@ -11,24 +11,22 @@ const currentPath = Astro.url.pathname;
 ---
 
 <nav
-  class="sticky top-0 z-50 flex items-center gap-6 bg-bg/90 px-4 py-4 backdrop-blur sm:px-8"
-  style="box-shadow: 0 1px 0 color-mix(in srgb, var(--color-text) 10%, transparent);"
+  id="site-nav"
+  class="fixed inset-x-8 top-6 z-50 mx-auto flex max-w-7xl items-center gap-2 rounded-full border px-3 py-2.5 sm:inset-x-10 sm:top-8 sm:px-4 sm:py-4 lg:inset-x-14"
 >
-  <a href="/" class="mr-auto block text-text">
-    <KleponLogo class="h-7 w-auto" />
+  <a href="/" class="nav-logo-link mr-2 flex shrink-0 items-center">
+    <KleponLogo
+      class="h-[var(--logo-size,1.5rem)] w-auto transition-[height] duration-300 ease-out"
+    />
   </a>
 
-  <div class="hidden items-center gap-6 md:flex">
+  <div class="hidden flex-1 items-center justify-center gap-2 md:flex">
     {
       links.map((link) => (
         <a
           href={link.href}
           aria-current={currentPath === link.href ? "page" : undefined}
-          class={`text-sm font-medium no-underline ${
-            currentPath === link.href
-              ? "text-accent-700"
-              : "text-text/70 hover:text-accent-700"
-          }`}
+          class="nav-link rounded-full border px-4 py-2 text-sm font-medium no-underline transition-colors"
         >
           {link.label}
         </a>
@@ -36,33 +34,33 @@ const currentPath = Astro.url.pathname;
     }
   </div>
 
-  <div class="flex items-center gap-2 sm:gap-3">
+  <div class="ml-auto flex shrink-0 items-center gap-2 sm:gap-3">
     <a
       href="https://api.klepon.systems/Portal/Login"
       target="_blank"
       rel="noopener noreferrer"
-      class="hidden text-sm font-medium text-text/70 no-underline hover:text-accent-700 md:inline-block"
+      class="nav-login-link hidden text-sm font-medium no-underline transition-colors md:inline-block"
     >
       Login
     </a>
-    <a
+    <!-- <a
       href="#"
-      class="hidden rounded-full border border-text/15 px-5 py-2.5 text-sm font-semibold text-text no-underline hover:bg-text/5 sm:inline-flex"
+      class="hidden rounded-full border-2 border-accent px-5 py-2.5 text-sm font-semibold text-accent-200 no-underline transition-colors hover:bg-accent/15 hover:text-white sm:inline-flex"
     >
       Request Trial
-    </a>
+    </a> -->
     <a
       href="#"
-      class="rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white no-underline hover:bg-accent-500"
+      class="rounded-full bg-brand-amber px-5 py-2.5 text-sm font-semibold text-brand-navy no-underline transition-colors"
     >
-      <span class="hidden sm:inline">Download Tools</span>
-      <span class="sm:hidden">Tools</span>
+      <span class="hidden sm:inline">Request Trial Access</span>
+      <span class="sm:hidden">Contact Us</span>
     </a>
 
     <details id="mobile-menu" class="relative md:hidden">
       <summary
         aria-label="Menu"
-        class="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-full border border-text/15 text-text [&::-webkit-details-marker]:hidden"
+        class="nav-menu-btn flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-full border [&::-webkit-details-marker]:hidden"
       >
         <svg
           width="18"
@@ -79,7 +77,7 @@ const currentPath = Astro.url.pathname;
         </svg>
       </summary>
       <div
-        class="absolute right-0 top-full z-50 mt-3 flex w-48 flex-col gap-4 rounded-2xl bg-bg p-4 shadow-elev-md"
+        class="absolute right-0 top-full z-50 mt-3 flex w-48 flex-col gap-4 rounded-2xl bg-brand-navy p-4 text-white shadow-elev-md"
       >
         {
           links.map((link) => (
@@ -88,8 +86,8 @@ const currentPath = Astro.url.pathname;
               aria-current={currentPath === link.href ? "page" : undefined}
               class={`text-sm font-medium no-underline ${
                 currentPath === link.href
-                  ? "text-accent-700"
-                  : "text-text/70 hover:text-accent-700"
+                  ? "text-accent-200"
+                  : "text-white/75 hover:text-accent-200"
               }`}
             >
               {link.label}
@@ -100,20 +98,153 @@ const currentPath = Astro.url.pathname;
           href="https://api.klepon.systems/Portal/Login"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-sm font-medium text-text/70 no-underline hover:text-accent-700"
+          class="text-sm font-medium text-white/75 no-underline hover:text-accent-200"
         >
           Login
         </a>
         <a
           href="#"
-          class="text-sm font-medium text-text/70 no-underline hover:text-accent-700"
+          class="text-sm font-medium text-white/75 no-underline hover:text-accent-200"
         >
-          Request Trial
+          Download Trial
         </a>
       </div>
     </details>
   </div>
 </nav>
+
+<style>
+  #site-nav {
+    /* Centralized here (not a Tailwind transition-* utility) so every
+       state below — hide/reveal, top↔scrolled width, and the dark↔light
+       color swap — animates through the same list. */
+    transition:
+      opacity 300ms ease-out,
+      transform 300ms ease-out,
+      max-width 300ms ease-out,
+      border-color 300ms ease-out,
+      backdrop-filter 300ms ease-out,
+      box-shadow 300ms ease-out,
+      background-color 300ms ease-out;
+
+    /* Logo size as a custom property (not a scoped descendant selector)
+       so it still reaches the SVG rendered inside the KleponLogo child
+       component, across the component boundary. Bigger at the top,
+       shrinks in .nav-compact below — the logo itself picks this up via
+       h-[var(--logo-size)] and animates it with its own transition
+       utility. */
+    --logo-size: 2rem;
+
+    /* No fill (no background-color) — legibility comes from foreground
+       color + border, not a tinted glass panel behind the pill. Blur
+       and shadow are still fair game though (see .nav-compact below) —
+       just no color wash. Every color-bearing child reads from these
+       instead of hardcoding white/*, so .nav-light further down can
+       swap the whole palette in one place rather than needing an
+       override for every individual utility class. */
+    --nav-border: transparent;
+    --nav-bg: transparent;
+    --nav-fg: #ffffff;
+    --nav-fg-muted: color-mix(in srgb, white 70%, transparent);
+    --nav-link-fg: color-mix(in srgb, white 80%, transparent);
+    --nav-link-fg-hover: var(--color-brand-green-200);
+    --nav-link-fg-active: var(--color-brand-green-200);
+    --nav-link-border: color-mix(in srgb, white 15%, transparent);
+    --nav-link-border-hover: color-mix(
+      in srgb,
+      var(--color-brand-green-600) 50%,
+      transparent
+    );
+    --nav-link-border-active: color-mix(
+      in srgb,
+      var(--color-brand-green-600) 70%,
+      transparent
+    );
+    --nav-menu-border: color-mix(in srgb, white 20%, transparent);
+
+    border-color: var(--nav-border);
+    background-color: var(--nav-bg);
+  }
+
+  #site-nav .nav-logo-link {
+    color: var(--nav-fg);
+  }
+
+  #site-nav .nav-link {
+    color: var(--nav-link-fg);
+    border-color: var(--nav-link-border);
+  }
+
+  #site-nav .nav-link:hover {
+    color: var(--nav-link-fg-hover);
+    border-color: var(--nav-link-border-hover);
+  }
+
+  #site-nav .nav-link[aria-current="page"] {
+    color: var(--nav-link-fg-active);
+    border-color: var(--nav-link-border-active);
+  }
+
+  #site-nav .nav-login-link {
+    color: var(--nav-fg-muted);
+  }
+
+  #site-nav .nav-login-link:hover {
+    color: var(--nav-link-fg-hover);
+  }
+
+  #site-nav .nav-menu-btn {
+    color: var(--nav-fg);
+    border-color: var(--nav-menu-border);
+  }
+
+  /* Bimorph-style reveal: hidden while actively scrolling down, slides
+     smoothly back in on scroll-up (or once back near the top). Toggled
+     by the scroll listener below. */
+  #site-nav.nav-hidden {
+    opacity: 0;
+    transform: translateY(-0.75rem) scale(0.98);
+    pointer-events: none;
+  }
+
+  /* Base state (transparent border, max-w-7xl + inset-x-8/10/14, no blur
+     or shadow) mirrors the hero content's own max-w-7xl + px-8/10/14
+     exactly, so at the very top the pill's edges line up with the hero
+     copy below it at every viewport width — capped instead of
+     stretching edge-to-edge on very wide screens, and visually as bare
+     as the "matches initial load" look calls for. Once scrolled away
+     from the top, .nav-compact narrows it, brings a hairline border
+     back in, and is where blur/shadow turn on — still no background
+     fill, just depth cues once the pill is a distinct floating object
+     instead of flush with the page. Color is .nav-light's job below,
+     independent of this. */
+  #site-nav.nav-compact {
+    max-width: 64rem; /* Tailwind's max-w-5xl */
+    --nav-border: color-mix(in srgb, white 10%, transparent);
+    --logo-size: 1.5rem; /* Tailwind's h-6 — today's default size */
+    backdrop-filter: blur(6px);
+    box-shadow: var(--shadow-elev-md);
+  }
+
+  /* The white-on-transparent palette above is specialized for sitting on
+     the hero. Once the nav has scrolled clear of it (or there's no hero
+     on this page at all, e.g. Tools/About), swap to dark foreground +
+     a visible border instead — no fill, so the border is what carries
+     the pill's shape here, not a glass panel. Comes after .nav-compact
+     so it wins the tie on --nav-border when both are active (the usual
+     case). */
+  #site-nav.nav-light {
+    --nav-border: color-mix(in srgb, var(--color-text) 20%, transparent);
+    --nav-bg: color-mix(in srgb, var(--color-brand-bg) 80%, transparent);
+    --nav-fg: var(--color-brand-navy);
+    --nav-fg-muted: color-mix(in srgb, var(--color-text) 70%, transparent);
+    --nav-link-fg: color-mix(in srgb, var(--color-text) 80%, transparent);
+    --nav-link-fg-hover: var(--color-brand-green-700);
+    --nav-link-fg-active: var(--color-brand-green-700);
+    --nav-link-border: color-mix(in srgb, var(--color-text) 15%, transparent);
+    --nav-menu-border: color-mix(in srgb, var(--color-text) 15%, transparent);
+  }
+</style>
 
 <script type="module">
   const menu = document.getElementById("mobile-menu");
@@ -125,4 +256,42 @@ const currentPath = Astro.url.pathname;
       }
     });
   }
+
+  const nav = document.getElementById("site-nav");
+  const hero = document.getElementById("hero");
+  let lastScrollY = window.scrollY;
+
+  const updateNavVisibility = () => {
+    if (!nav) return;
+
+    const scrollY = window.scrollY;
+    const atTop = scrollY <= 24;
+
+    // Wide + borderless at the very top (matches initial load); narrower
+    // + bordered once scrolled away from it.
+    nav.classList.toggle("nav-compact", !atTop);
+
+    // Dark glass while the nav still overlaps the hero; light glass once
+    // it's scrolled clear (compares viewport-relative rects each tick,
+    // not cached page offsets, so it stays correct through any layout
+    // shift). Pages with no #hero (Tools, About, ...) never had a dark
+    // panel to begin with, so they go straight to light.
+    const pastHero =
+      !hero ||
+      hero.getBoundingClientRect().bottom <= nav.getBoundingClientRect().bottom;
+    nav.classList.toggle("nav-light", pastHero);
+
+    if (atTop || menu?.open) {
+      nav.classList.remove("nav-hidden");
+    } else if (scrollY > lastScrollY) {
+      nav.classList.add("nav-hidden");
+    } else if (scrollY < lastScrollY) {
+      nav.classList.remove("nav-hidden");
+    }
+
+    lastScrollY = scrollY;
+  };
+
+  updateNavVisibility();
+  window.addEventListener("scroll", updateNavVisibility, { passive: true });
 </script>

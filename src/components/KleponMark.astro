@@ -7,12 +7,14 @@
  */
 interface Props {
   class?: string;
+  [attr: string]: unknown;
 }
 
-const { class: className = "" } = Astro.props;
+const { class: className = "", ...rest } = Astro.props;
 ---
 
 <svg
+  {...rest}
   viewBox="94.21 86.34 798.63 812"
   fill="currentColor"
   class={className}
