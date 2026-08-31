@@ -128,102 +128,133 @@ const steps = [
   title="Tools — KLEPON"
   description="Explore the KLEPON toolset — connected Revit tools for fire system modelling, hydraulic calculations, fabrication data, and documentation."
 >
-  <div class="mx-auto max-w-7xl">
+  <div class="w-full bg-brand-bg font-brand">
     <Nav />
 
-    <section
-      class="grid grid-cols-1 items-center gap-10 px-8 pb-16 pt-14 lg:grid-cols-12 lg:gap-x-14"
-    >
-      <div class="lg:col-span-6">
-        <span
-          class="mb-2.5 block text-label font-semibold uppercase tracking-wide text-accent-700"
+    <section id="hero" class="px-0 pb-0 pt-0">
+      <div
+        class="relative flex flex-col justify-center overflow-hidden bg-brand-navy px-8 pb-16 pt-28 sm:px-10 sm:pb-20 sm:pt-32 lg:px-14 lg:pb-24 lg:pt-36"
+      >
+        <div
+          class="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-x-14"
         >
-          Tools
-        </span>
-        <h1 class="mb-5 text-[2.75rem] leading-[1.1]">
-          Fire Design <span class="text-accent-700">Tools</span> for Every Stage of
-          the Model
-        </h1>
-        <p class="max-w-[56ch] text-base leading-relaxed text-text/85">
-          KLEPON is a set of connected Revit tools built by fire protection
-          engineers — covering modelling, hydraulic calculations, fabrication
-          data, and documentation, all working from the same model.
-        </p>
-      </div>
+          <div class="lg:col-span-6">
+            <span
+              class="mb-2.5 block text-label font-bold uppercase tracking-wide text-accent-200"
+            >
+              Tools
+            </span>
+            <h1
+              class="mb-5 text-[2rem] font-extrabold leading-[1.5] tracking-tight text-white uppercase sm:text-[2.25rem]"
+            >
+              Fire Design <span class="text-brand-amber">Tools</span> for Every
+              Stage of the Model
+            </h1>
+            <p class="mb-7 max-w-[52ch] text-base leading-relaxed text-white/75">
+              KLEPON is a set of connected Revit tools built by fire protection
+              engineers — covering modelling, hydraulic calculations,
+              fabrication data, and documentation, all working from the same
+              model.
+            </p>
+            <div class="grid gap-3 sm:flex sm:flex-wrap sm:items-center">
+              <Button variant="primary" href="#packages" class="w-full text-white sm:w-auto">
+                See Packages
+              </Button>
+              <Button
+                variant="secondary"
+                href="#toolset"
+                class="w-full border-white/25 text-white hover:bg-white/10 sm:w-auto"
+              >
+                Explore The Toolset
+              </Button>
+            </div>
+          </div>
 
-      <div class="lg:col-span-6">
-        <div class="relative overflow-hidden rounded-[2rem] bg-surface p-6 shadow-sm sm:p-8">
-          <svg
-            class="pointer-events-none absolute -right-10 -top-10 h-56 w-56 text-accent-700/[0.07]"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1"
-            aria-hidden="true"
-          >
-            <rect x="3" y="3" width="18" height="18"></rect>
-            <path d="M3 9h18M9 3v18"></path>
-          </svg>
-          <ul class="relative flex flex-col gap-6">
-            {
-              heroFacts.map((f) => (
-                <li class="flex items-start gap-4">
-                  <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-divider bg-bg shadow-sm">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="var(--color-accent-700)"
-                      stroke-width="1.5"
-                      aria-hidden="true"
-                      set:html={f.icon}
-                    />
-                  </span>
-                  <span>
-                    <span class="block text-micro font-semibold uppercase tracking-wide text-accent-700">
-                      {f.label}
-                    </span>
-                    <span class="block text-body leading-snug">{f.value}</span>
-                  </span>
-                </li>
-              ))
-            }
-          </ul>
+          <div class="lg:col-span-6">
+            <div
+              class="relative overflow-hidden rounded-[2rem] border border-white/15 bg-white/[0.06] p-6 backdrop-blur-sm sm:p-8"
+            >
+              <svg
+                class="pointer-events-none absolute -right-10 -top-10 h-56 w-56 text-white/[0.06]"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1"
+                aria-hidden="true"
+              >
+                <rect x="3" y="3" width="18" height="18"></rect>
+                <path d="M3 9h18M9 3v18"></path>
+              </svg>
+              <ul class="relative flex flex-col gap-6">
+                {
+                  heroFacts.map((f) => (
+                    <li class="flex items-start gap-4">
+                      <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-white/10">
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="var(--color-brand-amber)"
+                          stroke-width="1.5"
+                          aria-hidden="true"
+                          set:html={f.icon}
+                        />
+                      </span>
+                      <span>
+                        <span class="block text-micro font-semibold uppercase tracking-wide text-accent-200">
+                          {f.label}
+                        </span>
+                        <span class="block text-body leading-snug text-white/85">
+                          {f.value}
+                        </span>
+                      </span>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <hr class="mx-8 h-px border-0 bg-divider" />
-
-    <section class="px-8 py-16">
-      <div class="mx-auto mb-10 max-w-3xl text-center">
+    <section id="toolset" class="bg-white px-8 py-16 sm:px-10 lg:px-14">
+      <div class="mx-auto mb-12 max-w-2xl text-center">
         <span
-          class="mb-2.5 block text-label font-semibold uppercase tracking-wide text-accent-700"
+          class="mb-2.5 block text-label font-bold uppercase tracking-wide text-brand-green-700"
         >
           The Toolset
         </span>
-        <h2 class="mb-3 text-[2rem]">
+        <span
+          class="mx-auto mb-4 block h-1 w-12 bg-brand-amber"
+          aria-hidden="true"
+        ></span>
+        <h2 class="mb-3 text-[2rem] font-extrabold text-brand-navy">
           Every Tool Built Around Real Project Work
         </h2>
-        <p class="text-body leading-relaxed text-text/85">
+        <p class="text-body leading-relaxed text-brand-navy/75">
           Each module is designed and tested by engineers who use it on live
           fire protection projects — not built around generic software
           assumptions.
         </p>
       </div>
 
-      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="mx-auto grid max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {
-          tools.map((t) => (
-            <div class="card flex flex-col items-start gap-2 p-5 transition-shadow duration-200 hover:shadow-elev-md">
+          tools.map((t, i) => (
+            <div
+              data-reveal
+              style={`transition-delay: ${(i % 3) * 100}ms`}
+              class="flex translate-y-6 flex-col items-start gap-2 rounded-3xl border border-brand-navy/10 bg-white p-6 opacity-0 shadow-sm transition-all duration-700 ease-out [&.is-visible]:translate-y-0 [&.is-visible]:opacity-100 hover:shadow-elev-md"
+            >
               <div class="flex w-full items-start justify-between gap-3">
                 <svg
                   width="26"
                   height="26"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="var(--color-accent-700)"
+                  stroke="var(--color-brand-green-700)"
                   stroke-width="1.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -231,63 +262,73 @@ const steps = [
                   set:html={t.icon}
                 />
                 <span
-                  class={`shrink-0 border px-2 py-0.5 text-micro-sm font-semibold uppercase tracking-wide ${
+                  class={`shrink-0 rounded-full border px-3 py-1 text-micro-sm font-semibold uppercase tracking-wide ${
                     t.status === "Beta"
-                      ? "border-accent-300 text-accent-700"
-                      : "border-divider text-text/60"
+                      ? "border-brand-amber text-brand-amber"
+                      : "border-brand-navy/15 text-brand-navy/60"
                   }`}
                 >
                   {t.status}
                 </span>
               </div>
-              <div class="mt-1.5 font-heading text-lg font-semibold">
+              <div class="mt-1.5 font-heading text-lg font-bold text-brand-navy">
                 {t.title}
               </div>
-              <p class="m-0 flex-1 text-label opacity-80">{t.body}</p>
+              <p class="m-0 flex-1 text-label leading-relaxed text-brand-navy/70">
+                {t.body}
+              </p>
             </div>
           ))
         }
       </div>
     </section>
 
-    <hr class="mx-8 h-px border-0 bg-divider" />
-
-    <section class="px-8 py-16">
-      <div class="mx-auto mb-12 max-w-3xl text-center">
+    <section class="px-8 py-16 sm:px-10 lg:px-14">
+      <div class="mx-auto mb-14 max-w-2xl text-center">
         <span
-          class="mb-2.5 block text-label font-semibold uppercase tracking-wide text-accent-700"
+          class="mb-2.5 block text-label font-bold uppercase tracking-wide text-brand-green-700"
         >
           How It Fits Together
         </span>
-        <h2 class="text-[2rem]">
+        <span
+          class="mx-auto mb-4 block h-1 w-12 bg-brand-amber"
+          aria-hidden="true"
+        ></span>
+        <h2 class="text-[2rem] font-extrabold text-brand-navy">
           From Installation to Delivery
         </h2>
       </div>
 
       <ol class="relative mx-auto flex max-w-2xl flex-col gap-10">
         <div
-          class="absolute bottom-6 left-6 top-6 w-px bg-divider"
+          class="absolute bottom-6 left-6 top-6 w-px bg-brand-navy/10"
           aria-hidden="true"
         >
         </div>
         {
-          steps.map((step) => (
-            <li class="relative flex gap-5">
-              <div class="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-divider bg-surface shadow-sm">
+          steps.map((step, i) => (
+            <li
+              data-reveal
+              style={`transition-delay: ${i * 120}ms`}
+              class="relative flex translate-y-6 gap-5 opacity-0 transition-all duration-700 ease-out [&.is-visible]:translate-y-0 [&.is-visible]:opacity-100"
+            >
+              <div class="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-brand-navy/10 bg-white shadow-sm">
                 <svg
                   width="20"
                   height="20"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="var(--color-accent-700)"
+                  stroke="var(--color-brand-green-700)"
                   stroke-width="1.5"
                   aria-hidden="true"
                   set:html={step.icon}
                 />
               </div>
               <div class="pt-2">
-                <h3 class="mb-1.5 text-lg normal-case">{step.title}</h3>
-                <p class="m-0 max-w-[55ch] text-body leading-relaxed text-text/85">
+                <h3 class="mb-1.5 text-lg font-bold text-brand-navy">
+                  {step.title}
+                </h3>
+                <p class="m-0 max-w-[55ch] text-body leading-relaxed text-brand-navy/75">
                   {step.body}
                 </p>
               </div>
@@ -297,50 +338,54 @@ const steps = [
       </ol>
     </section>
 
-    <hr class="mx-8 h-px border-0 bg-divider" />
-
-    <section class="px-8 py-16">
-      <div class="mx-auto mb-12 max-w-3xl text-center">
+    <section id="packages" class="bg-white px-8 py-16 sm:px-10 lg:px-14">
+      <div class="mx-auto mb-12 max-w-2xl text-center">
         <span
-          class="mb-2.5 block text-label font-semibold uppercase tracking-wide text-accent-700"
+          class="mb-2.5 block text-label font-bold uppercase tracking-wide text-brand-green-700"
         >
           Packages
         </span>
-        <h2 class="mb-3 text-[2rem]">
+        <span
+          class="mx-auto mb-4 block h-1 w-12 bg-brand-amber"
+          aria-hidden="true"
+        ></span>
+        <h2 class="mb-3 text-[2rem] font-extrabold text-brand-navy">
           Design, Build, Or Both
         </h2>
-        <p class="text-body leading-relaxed text-text/85">
+        <p class="text-body leading-relaxed text-brand-navy/75">
           KLEPON is in closed beta — packages are provisioned per account, not
-          purchased through a self-service checkout. Get in touch and we'll set
-          your team up with the right one.
+          purchased through a self-service checkout. Get in touch and we'll
+          set your team up with the right one.
         </p>
       </div>
 
-      <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+      <div class="mx-auto grid max-w-6xl grid-cols-1 gap-6 lg:grid-cols-3">
         {
-          packages.map((p) => (
+          packages.map((p, i) => (
             <div
-              class={`card flex flex-col gap-5 p-6 sm:p-7 ${
-                p.highlight ? "ring-2 ring-accent" : ""
+              data-reveal
+              style={`transition-delay: ${i * 100}ms`}
+              class={`flex translate-y-6 flex-col gap-5 rounded-3xl border border-brand-navy/10 bg-white p-6 opacity-0 shadow-sm transition-all duration-700 ease-out [&.is-visible]:translate-y-0 [&.is-visible]:opacity-100 sm:p-7 ${
+                p.highlight ? "ring-2 ring-brand-green shadow-elev-md" : ""
               }`}
             >
               <div>
                 <div class="flex items-start justify-between gap-3">
-                  <h3 class="text-xl normal-case">{p.name}</h3>
+                  <h3 class="text-xl font-bold text-brand-navy">{p.name}</h3>
                   {p.badge && (
-                    <span class="shrink-0 border border-accent-300 px-2 py-0.5 text-micro-sm font-semibold uppercase tracking-wide text-accent-700">
+                    <span class="shrink-0 rounded-full border border-brand-amber px-2.5 py-0.5 text-micro-sm font-semibold uppercase tracking-wide text-brand-amber">
                       {p.badge}
                     </span>
                   )}
                 </div>
-                <p class="m-0 mt-3 font-heading text-2xl font-semibold text-accent-700">
+                <p class="m-0 mt-3 font-heading text-2xl font-extrabold text-brand-green-700">
                   {p.price}
                 </p>
-                <p class="m-0 mt-2 text-label leading-relaxed opacity-80">
+                <p class="m-0 mt-2 text-label leading-relaxed text-brand-navy/70">
                   {p.tagline}
                 </p>
                 {p.accessNote && (
-                  <p class="m-0 mt-3 border-t border-divider pt-3 text-label leading-relaxed text-accent-800">
+                  <p class="m-0 mt-3 border-t border-brand-navy/10 pt-3 text-label leading-relaxed text-brand-green-800">
                     {p.accessNote}
                   </p>
                 )}
@@ -354,7 +399,7 @@ const steps = [
                       height="16"
                       viewBox="0 0 24 24"
                       fill="none"
-                      stroke="var(--color-accent-700)"
+                      stroke="var(--color-brand-green-600)"
                       stroke-width="2"
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -362,7 +407,9 @@ const steps = [
                       aria-hidden="true"
                       set:html={checkIcon}
                     />
-                    <span class="text-label leading-snug">{f}</span>
+                    <span class="text-label leading-snug text-brand-navy/85">
+                      {f}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -370,6 +417,7 @@ const steps = [
               <Button
                 variant={p.highlight ? "primary" : "secondary"}
                 size="md"
+                class={p.highlight ? "text-white" : ""}
                 href={`mailto:support@klepon.systems?subject=${encodeURIComponent(
                   `KLEPON ${p.name} access`,
                 )}`}
@@ -381,13 +429,43 @@ const steps = [
         }
       </div>
 
-      <p class="mx-auto mt-8 max-w-2xl text-center text-label leading-relaxed text-text/70">
-        <span class="font-semibold text-accent-700">Included in every plan:</span>{" "}
+      <p class="mx-auto mt-8 max-w-2xl text-center text-label leading-relaxed text-brand-navy/70">
+        <span class="font-semibold text-brand-green-700">Included in every plan:</span>{" "}
         {includedInEveryPlan.join(", ")}.
       </p>
     </section>
 
     <AboutCTA />
     <Footer />
+
+    <script>
+      // Same scroll-reveal convention as the homepage: IntersectionObserver
+      // + a plain CSS opacity/translate transition toggled via .is-visible,
+      // so [data-reveal] behaves identically on every page.
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      const revealTargets = document.querySelectorAll("[data-reveal]");
+      if (revealTargets.length) {
+        if (reduceMotion) {
+          revealTargets.forEach((el) => el.classList.add("is-visible"));
+        } else {
+          const revealObserver = new IntersectionObserver(
+            (entries) => {
+              for (const entry of entries) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("is-visible");
+                } else {
+                  entry.target.classList.remove("is-visible");
+                }
+              }
+            },
+            { threshold: 0.2, rootMargin: "0px 0px -10% 0px" },
+          );
+          revealTargets.forEach((el) => revealObserver.observe(el));
+        }
+      }
+    </script>
   </div>
 </Layout>
