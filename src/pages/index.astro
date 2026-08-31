@@ -22,6 +22,13 @@ const highlights = [
   },
 ];
 
+// Use only horizontal motion for the Solutions rows so the reveal stays
+// consistent and directional without the vertical variants.
+const revealDirections = [
+  "opacity-0 -translate-x-10",
+  "opacity-0 translate-x-10",
+];
+
 const solutions = [
   {
     title: "Fire System Modelling Tools",
@@ -45,35 +52,136 @@ const solutions = [
   },
 ];
 
+// Bento layout: features[0] is the big full-width card, features[1..3]
+// sit in the row below. Images are existing project assets standing in
+// for real product screenshots.
 const features = [
   {
-    number: "01",
-    numberColor: "text-brand-green-300",
-    title: "Create one reliable source of project data",
-    body: "Structure fire protection design information inside the Revit model, so drawings, schedules, calculations, material lists, prefab data, and project outputs can flow from the same source.",
-    icon: '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/>',
+    title: "One model, not a re-entered one",
+    body: "Sprinkler, pipe, and source data used in the calculation are the same parameters live on your Revit elements — no separate spreadsheet or import step to keep in sync as the design changes.",
+    image: "/feature.jpg",
   },
   {
-    number: "02",
-    numberColor: "text-brand-green-200",
-    title: "Reduce repetitive modelling",
-    body: "Automate common Revit tasks and reduce the time spent on manual input, duplicated data, and disconnected project information.",
-    icon: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    title: "Two calculation modes, one engine",
+    body: "Design what your source needs to supply, or verify a real pump or city-supply curve against your demand — without switching tools between design and verification.",
+    image: "/Interactive Hydraulic Calculations.png",
   },
   {
-    number: "03",
-    numberColor: "text-brand-green-300",
-    title: "Improve engineering accuracy",
-    body: "Use structured model data and controlled workflows to reduce mistakes, rework, and inconsistencies between drawings, schedules, reports, and downstream outputs.",
-    icon: '<path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5z"/><path d="m9 12 2 2 4-4"/>',
+    title: "Guardrails built into the design",
+    body: "Automatic dead-end and critical-area screening, plus mark-collision checks during prefab numbering, are built to catch the network mistakes that are easy to miss by eye.",
+    image: "/Fire system modeling tools.png",
   },
   {
-    number: "04",
-    numberColor: "text-brand-green-200",
-    title: "Connect design to delivery",
-    body: "Turn model data into practical information for engineering, procurement, fabrication, installation, handover, and future maintenance workflows.",
-    icon: '<path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07l1.5-1.5"/>',
+    title: "From calculation to drawing",
+    body: "The same design area can produce a PDF calculation report, an auto-generated P&ID drafting view, and — with the Build package — a numbered, trackable set of prefab spools.",
+    image: "/P&ID generator.png",
   },
+];
+
+// Hub-and-spoke capability wheel for "Single Source of Truth", replacing
+// the old wordcloud.png. Positioning is done at RUNTIME by a small
+// vanilla-JS layout pass at the bottom of this file (no GSAP — the
+// reveal still runs through the site's existing IntersectionObserver
+// convention), ported directly from the reference prototype's own
+// layout()/fit() functions: measure each card's real rendered size,
+// anchor it along its angle at CARD_R, dock the connector to whichever
+// edge faces the hub, and scale the whole 1180×760 stage to the
+// container's width. Two earlier build-time-only attempts at
+// approximating this with precomputed percentages produced overlapping
+// cards once actually screenshotted — the reference avoids that by using
+// each card's true measured box, which only exists in the browser.
+//
+// NOTE: Coordination, Procurement, Installation, As-Built & Handover, and
+// the QR Code Generator line item reintroduce claims this session's own
+// Confirm-Before-Publish review flagged as unverified against the plugin
+// source (Procurement/Installation/Coordination/Handover) or explicitly
+// not reachable by a customer today (QR Code Generator's ribbon button is
+// commented out of App.cs). Kept per an explicit decision when asked,
+// not an oversight — revisit if that decision changes.
+// One green everywhere across the 6 repeated elements in this component
+// (cards, tags, dots) — matches --color-brand-green-600, the same token
+// every other green on this page resolves to (buttons, the "Engineers"
+// text accent, the triangle/mark). Previously mixed in --color-brand-amber
+// and --color-brand-green-300 (a much lighter mint, #8fdfb9 vs #11a46e)
+// across those repeated elements for visual variety — caught on review as
+// reading like a different green, not a deliberate accent. The 3 orbit
+// rings are the one deliberate exception: see wheelRings below.
+const WHEEL_GREEN = "var(--color-brand-green-600)";
+
+// title/eyebrow/items/tag/angle are the reference's own copy, used as-
+// is. angle: evenly spaced (60° apart) rather than the reference's own
+// clustered angles (-90/-40/8/52/128/-140, spanning only ~142° on one
+// side) — a deliberate simplification for a more symmetric layout.
+// big: the reference's .card.lg.
+const capabilityWheel = [
+  {
+    id: "design",
+    title: "Fire System Design",
+    eyebrow: "Hydraulic Calculation",
+    items: ["Design tools", "Utility tools", "Modeling tools"],
+    tag: "Automated",
+    angle: -90,
+    big: true,
+  },
+  {
+    id: "coord",
+    title: "Coordination",
+    items: ["Families-to-site accuracy", "Auto-clash fix (coming soon)"],
+    tag: "Collaboration",
+    angle: -30,
+  },
+  {
+    id: "proc",
+    title: "Procurement",
+    items: ["Automated material listing", "Preset material specifications"],
+    tag: "Connected",
+    angle: 30,
+  },
+  {
+    id: "prefab",
+    title: "Pre-Fabrication",
+    items: ["Full automated prefab tools", "Automated pipe spool sheets"],
+    tag: "Time saving",
+    angle: 90,
+  },
+  {
+    id: "install",
+    title: "Installation",
+    items: ["QR code generator", "Automated pipe spool tagging"],
+    tag: "Accurate",
+    angle: 150,
+  },
+  {
+    id: "asbuilt",
+    title: "As-Built & Handover",
+    eyebrow: "Klepon Auto-As-Built Scan Conversion",
+    items: ["Klepon P&ID Generator"],
+    tag: "Up to date",
+    angle: 210,
+  },
+];
+
+// Same three orbit-arc radii/spans as the reference (150/170/190 around
+// hub 590,380), plain SVG paths since they're static — only the cards/
+// connectors/dots/tags need runtime positioning.
+const wheelPolar = (r: number, deg: number) => {
+  const a = (deg * Math.PI) / 180;
+  return [590 + r * Math.cos(a), 380 + r * Math.sin(a)] as const;
+};
+const wheelArc = (r: number, a0: number, a1: number) => {
+  const [x0, y0] = wheelPolar(r, a0);
+  const [x1, y1] = wheelPolar(r, a1);
+  const large = Math.abs(a1 - a0) > 180 ? 1 : 0;
+  const sweep = a1 > a0 ? 1 : 0;
+  return `M ${x0.toFixed(1)} ${y0.toFixed(1)} A ${r} ${r} 0 ${large} ${sweep} ${x1.toFixed(1)} ${y1.toFixed(1)}`;
+};
+// Middle ring is amber, not green — a small deliberate accent breaking
+// up the 3 concentric rings, echoing the sparing amber touches used
+// elsewhere on the page (underline bars, the "smarter" highlight).
+const wheelRings = [
+  { d: wheelArc(150, -118, 150), color: WHEEL_GREEN },
+  { d: wheelArc(170, 40, 268), color: "var(--color-brand-amber)" },
+  { d: wheelArc(190, 150, 392), color: WHEEL_GREEN },
 ];
 
 const downloadIcon =
@@ -121,7 +229,7 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
               Built by engineers with decades of real project experience
             </span>
             <h1
-              class="mb-5 text-[2.25rem] font-extrabold leading-[1.5] tracking-tight text-white uppercase"
+              class="mb-5 text-[2rem] font-extrabold leading-[1.5] tracking-tight text-white uppercase sm:text-[2.25rem]"
             >
               The <span class="text-brand-amber">smarter</span> way to design fire
               protection in Revit
@@ -154,6 +262,20 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
                 />
                 Download KLEPON Tools
               </Button>
+            </div>
+            <div
+              class="mt-6 flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-wide text-white/50"
+              aria-label="Product capabilities"
+            >
+              <span class="rounded-full border border-white/15 px-3 py-1.5">
+                Hydraulic Engine
+              </span>
+              <span class="rounded-full border border-white/15 px-3 py-1.5">
+                Native Calculation
+              </span>
+              <span class="rounded-full border border-white/15 px-3 py-1.5">
+                Revit-Native
+              </span>
             </div>
           </div>
 
@@ -196,6 +318,10 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
               <div class="mb-2 text-xl font-extrabold text-brand-navy">
                 {h.title}
               </div>
+              {/* <span
+                class="mb-3 block h-1 w-8 bg-brand-amber"
+                aria-hidden="true"
+              /> */}
               <p class="m-0 text-body leading-relaxed text-brand-navy/70">
                 {h.body}
               </p>
@@ -212,54 +338,58 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
         >
           Solutions
         </span>
+        <span class="mb-4 block h-1 w-12 bg-brand-amber" aria-hidden="true"
+        ></span>
         <h2
           class="mb-3 max-w-lg text-[2rem] font-extrabold leading-[1.3] text-brand-navy"
         >
           Practical Fire Design Tools Built by <span
             class="text-brand-green-700">Engineers</span
-          >, for <span class="text-brand-green-700">Engineers</span>
+          >, for <span class="text-brand-green-700">Engineers</span>.
         </h2>
         <p class="max-w-2xl text-body leading-[1.9] text-brand-navy/75">
           Created and refined by people who work with fire protection design
-          every day, KLEPON solutions are built around real project workflows —
+          every day, KLEPON solutions are built around real project workflows,
           not generic software assumptions.
         </p>
       </div>
 
-      <div class="mx-auto flex max-w-5xl flex-col gap-16">
+      <div class="mx-auto flex max-w-5xl flex-col gap-12">
         {
           solutions.map((s, i) => (
             <div
               data-reveal
-              style={`transition-delay: ${i * 100}ms`}
-              class={`flex flex-col items-start gap-8 opacity-0 translate-y-8 transition-all duration-700 ease-out [&.is-visible]:translate-y-0 [&.is-visible]:opacity-100 lg:gap-14 ${
+              class={`flex flex-col items-center gap-6 lg:gap-10 ${
                 i % 2 === 1 ? "lg:flex-row-reverse" : "lg:flex-row"
               }`}
             >
-              <div class="w-full lg:w-1/2">
-                <div class="flex items-center justify-center rounded-[2rem]  p-8">
+              <div
+                style={`transition-delay: ${i * 100}ms`}
+                class={`w-full transition-all duration-700 ease-out [.is-visible_&]:translate-x-0 [.is-visible_&]:translate-y-0 [.is-visible_&]:opacity-100 lg:w-[46%] ${revealDirections[i % revealDirections.length]}`}
+              >
+                <div class="flex items-center justify-center rounded-[2rem] p-6">
                   <img
                     src={s.image}
                     alt={s.title}
-                    class="aspect-[5/4] w-full max-w-sm object-contain"
+                    class="aspect-[5/4] w-full max-w-[22rem] object-contain"
                   />
                 </div>
               </div>
-              <div class="w-full lg:w-1/2">
-                <span class="mb-3 inline-flex h-7 items-center justify-center rounded-full bg-brand-amber px-3 text-xs font-bold text-brand-navy">
-                  0{i + 1}
-                </span>
-                <div class="mb-2 text-lg font-bold text-brand-navy">
+              <div
+                style={`transition-delay: ${i * 100}ms`}
+                class={`w-full transition-all duration-700 ease-out [.is-visible_&]:translate-x-0 [.is-visible_&]:translate-y-0 [.is-visible_&]:opacity-100 lg:w-[54%] ${revealDirections[i % revealDirections.length]}`}
+              >
+                <div class="mb-2 text-xl font-bold leading-[1.25] text-brand-navy lg:text-[1.75rem]">
                   {s.title}
                 </div>
-                <p class="m-0 max-w-[56ch] text-body leading-relaxed text-brand-navy/70">
+                <p class="m-0 max-w-[56ch] text-base leading-[1.7] text-brand-navy/70 lg:text-lg">
                   {s.body}
                 </p>
                 <Button
                   href="/tools"
                   variant="primary"
                   size="sm"
-                  class="mt-5 text-white no-underline hover:text-white hover:no-underline"
+                  class="mt-4 text-white no-underline hover:text-white hover:no-underline"
                 >
                   Learn More
                 </Button>
@@ -270,149 +400,276 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
       </div>
     </section>
 
-    <section
-      class="grid grid-cols-1 items-center gap-10 px-8 py-16 md:grid-cols-12 md:gap-x-16"
-    >
-      <div class="md:col-span-6">
-        <img
-          src="/wordcloud.png"
-          alt="Word cloud of KLEPON's core values: one source of truth, connected, accurate, construction-ready, efficient"
-          class="w-full rounded-[2rem] object-cover"
-        />
-      </div>
-
-      <div class="md:col-span-6">
+    <section class="bg-white px-8 py-16">
+      <div class="mx-auto mb-12 max-w-2xl text-center">
         <span
           class="mb-2.5 block text-label font-bold uppercase tracking-wide text-brand-green-700"
         >
-          Single Source of Truth
+          WORKFLOW
         </span>
+        <span
+          class="mx-auto mb-4 block h-1 w-12 bg-brand-amber"
+          aria-hidden="true"></span>
         <h2 class="mb-4 text-[2rem] font-extrabold text-brand-navy">
-          One Model. Connected Project Data.
+          From Revit to Reality
         </h2>
-        <p
-          class="mb-3.5 max-w-[60ch] text-body leading-relaxed text-brand-navy/75"
-        >
-          KLEPON helps fire protection teams turn the Revit design model into a
-          single shared source of project information — creating clearer
-          visuals, structured data, and practical outputs for everyone involved.
+        <p class="mb-3.5 text-body leading-relaxed text-brand-navy/75">
+          Created and refined by people who work with fire protection design
+          every day, KLEPON solutions are built around real project workflows,
+          not generic software assumptions.
         </p>
-        <p
-          class="mb-3.5 max-w-[60ch] text-body leading-relaxed text-brand-navy/75"
-        >
-          Instead of each team working from separate pieces of information,
-          KLEPON helps design data flow from the model into the wider project
-          workflow.
-        </p>
-        <p class="max-w-[60ch] text-body leading-relaxed text-brand-navy/75">
-          From early client requirements to design, coordination, approval,
-          procurement, installation, handover, and maintenance, KLEPON helps
-          each stakeholder work from a clearer understanding of the fire system.
-        </p>
+        <!-- <p class="text-body leading-relaxed text-brand-navy/75">
+          From setting up a design area through running the calculation,
+          generating a P&amp;ID drafting view, and tracking spools through
+          fabrication, every stage works from that same connected model — so
+          information stays in sync as the design changes, without re-entering
+          it into another tool.
+        </p> -->
+      </div>
+
+      {
+        /* Single column, full width — a hub-and-spoke layout with this
+         much horizontal spread needs more room than half a 12-col row,
+         confirmed by two earlier attempts that both ended up overlapping
+         inside that narrower column.
+
+         Hidden below md: fit() has no floor, so on a ~360px phone the
+         1180×760 stage would scale to ~0.25× — an 8px title, ~3px item
+         pills. Not "cramped," genuinely unreadable. Below md, the same
+         capabilityWheel data renders as a plain stacked list instead
+         (right after this element) — matching how Solutions/features
+         already collapse to one column on mobile elsewhere on this
+         page, rather than forcing the radial layout to survive a width
+         it was never going to survive. */
+      }
+      <div
+        data-reveal
+        id="wheel-frame"
+        class="wheel-frame mx-auto hidden max-w-5xl md:block"
+      >
+        <div id="wheel-scaler" class="wheel-scaler">
+          <div id="wheel-stage" class="wheel-stage">
+            <svg
+              id="wheel-svg"
+              viewBox="0 0 1180 760"
+              class="wheel-svg"
+              aria-hidden="true"
+            >
+              <g id="wheel-rings">
+                {
+                  wheelRings.map((ring) => (
+                    <path
+                      class="wheel-ring"
+                      d={ring.d}
+                      fill="none"
+                      stroke={ring.color}
+                    />
+                  ))
+                }
+              </g>
+              <g id="wheel-conns"></g>
+              <g id="wheel-dots"></g>
+
+              <circle class="wheel-hubdisc" cx="590" cy="380" r="140"></circle>
+
+              {
+                /* Small pipe-and-node illustration inside the hub disc,
+                 recolored to the site's green instead of the reference's
+                 fire-red — same coordinates as the reference, just
+                 recolored. */
+              }
+              <g class="wheel-pipe">
+                <path d="M 545 332 H 636"></path>
+                <path d="M 590 332 V 452"></path>
+                <path d="M 545 332 V 386 H 516"></path>
+                <path d="M 636 332 V 404 H 668"></path>
+                <path d="M 590 452 H 628 V 428"></path>
+              </g>
+              <g class="wheel-nodes">
+                <rect x="583" y="325" width="14" height="14" rx="2"></rect>
+                <rect x="538" y="325" width="14" height="14" rx="2"></rect>
+                <rect x="629" y="325" width="14" height="14" rx="2"></rect>
+                <rect x="583" y="445" width="14" height="14" rx="2"></rect>
+              </g>
+            </svg>
+
+            <div
+              id="wheel-hub"
+              class="wheel-hub"
+              style="left:590px; top:380px;"
+            >
+              R
+            </div>
+
+            {
+              capabilityWheel.map((node) => (
+                <div
+                  class={`wheel-card ${node.big ? "wheel-card-lg" : ""}`}
+                  data-id={node.id}
+                  data-angle={node.angle}
+                  tabindex="0"
+                >
+                  {node.eyebrow && (
+                    <p class="wheel-card-eyebrow">{node.eyebrow}</p>
+                  )}
+                  <h3 class="wheel-card-title">{node.title}</h3>
+                  <ul class="wheel-card-items">
+                    {node.items.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))
+            }
+
+            {
+              /* The colored tag rides the connector as its own floating
+               badge (matching the reference's separately-positioned .tag
+               div), not nested inside the card — positioned by the same
+               runtime layout pass. */
+            }
+            {
+              capabilityWheel.map((node) => (
+                <div
+                  class="wheel-tag"
+                  data-for={node.id}
+                  style={`background-color: ${WHEEL_GREEN}`}
+                >
+                  {node.tag}
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      {
+        /* Mobile equivalent of the wheel above — same capabilityWheel
+         data, plain stacked cards, real font sizes, no scaling math. */
+      }
+      <div class="mx-auto flex max-w-xl flex-col gap-4 md:hidden">
+        {
+          capabilityWheel.map((node, i) => (
+            <div
+              data-reveal
+              style={`transition-delay: ${i * 80}ms`}
+              class="rounded-3xl border border-brand-navy/10 bg-white p-5 opacity-0 translate-y-6 shadow-sm transition-all duration-700 ease-out [&.is-visible]:translate-y-0 [&.is-visible]:opacity-100"
+            >
+              <div class="mb-3 flex items-start justify-between gap-3">
+                <div>
+                  {node.eyebrow && (
+                    <p class="mb-1 text-[10px] font-bold uppercase leading-tight tracking-wide text-brand-navy/40">
+                      {node.eyebrow}
+                    </p>
+                  )}
+                  <h3 class="text-lg font-black uppercase leading-tight text-brand-navy">
+                    {node.title}
+                  </h3>
+                </div>
+                <span
+                  class="shrink-0 whitespace-nowrap rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white"
+                  style={`background-color: ${WHEEL_GREEN}`}
+                >
+                  {node.tag}
+                </span>
+              </div>
+              <ul class="m-0 flex flex-wrap gap-1.5 p-0">
+                {node.items.map((item) => (
+                  <li class="rounded-md border border-brand-navy/10 bg-brand-bg px-2 py-1 text-xs font-medium text-brand-navy/70">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
       </div>
     </section>
 
-    <section class="grid grid-cols-1 gap-10 px-8 py-16">
-      <div class="mx-auto mb-10 max-w-3xl text-center">
-        <span
-          class="mb-2.5 block text-label font-bold uppercase tracking-wide text-brand-green-700"
-        >
-          Feature highlights
-        </span>
-        <h2 class="mb-4 text-[2rem] font-extrabold text-brand-navy">
-          Connected Workflows from One Data Source
-        </h2>
+    <!-- <section class="px-8 py-16">
+      <div
+        class="mx-auto mb-10 flex max-w-6xl flex-col gap-6 lg:flex-row lg:items-start lg:justify-between"
+      >
+        <div class="lg:max-w-md">
+          <span
+            class="mb-2.5 inline-block rounded-full bg-brand-green-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-brand-green-700"
+          >
+            Key Data Workflows
+          </span>
+          <h2 class="text-[2rem] font-extrabold leading-[1.15] text-brand-navy">
+            Connected Workflows from One Data Source
+          </h2>
+        </div>
         <p
-          class="mx-auto max-w-[56ch] text-base leading-relaxed text-brand-navy/70"
+          class="text-body leading-relaxed text-brand-navy/70 lg:max-w-sm lg:pt-2"
         >
           The workflow is built around one reliable data source so your team can
           work faster, with less rework, and deliver with confidence.
         </p>
       </div>
 
-      <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+      <div class="mx-auto flex max-w-6xl flex-col gap-6">
         {
           features.slice(0, 1).map((f) => (
-            <div class="rounded-3xl bg-white p-5 shadow-sm">
-              <div class="mb-3.5 flex items-center gap-3">
-                <span class={`text-[2.125rem] font-extrabold ${f.numberColor}`}>
-                  {f.number}
-                </span>
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="var(--color-brand-green-700)"
-                  stroke-width="1.5"
-                  set:html={f.icon}
-                />
-              </div>
-              <h3 class="mb-2 text-lg font-bold text-brand-navy">{f.title}</h3>
-              <p class="m-0 text-sm leading-relaxed text-brand-navy/70">
+            <div class="rounded-3xl border border-brand-navy/10 bg-white p-6 shadow-sm sm:p-8">
+              <h3 class="mb-2 text-xl font-bold text-brand-navy">{f.title}</h3>
+              <p class="max-w-2xl text-body leading-relaxed text-brand-navy/70">
                 {f.body}
               </p>
+              <div class="mt-6 overflow-hidden rounded-2xl bg-brand-green-100 p-4">
+                <img
+                  src={f.image}
+                  alt={f.title}
+                  class="mx-auto max-h-72 w-full rounded-xl object-cover shadow-elev-md"
+                />
+              </div>
             </div>
           ))
         }
 
-        <div
-          class="hidden overflow-hidden rounded-3xl bg-white shadow-sm lg:block"
-        >
-          <img
-            src="/feature.jpg"
-            alt="Team reviewing fire protection data"
-            class="h-full w-full object-cover"
-          />
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          {
+            features.slice(1).map((f) => (
+              <div class="overflow-hidden rounded-3xl border border-brand-navy/10 bg-white shadow-sm">
+                <div class="p-6">
+                  <h3 class="mb-2 text-lg font-bold text-brand-navy">
+                    {f.title}
+                  </h3>
+                  <p class="text-sm leading-relaxed text-brand-navy/70">
+                    {f.body}
+                  </p>
+                </div>
+                <div class="bg-brand-green-100 p-4">
+                  <img
+                    src={f.image}
+                    alt={f.title}
+                    class="aspect-[4/3] w-full rounded-xl object-contain"
+                  />
+                </div>
+              </div>
+            ))
+          }
         </div>
 
-        {
-          features.slice(1).map((f) => (
-            <div class="rounded-3xl bg-white p-5 shadow-sm">
-              <div class="mb-3.5 flex items-center gap-3">
-                <span class={`text-[2.125rem] font-extrabold ${f.numberColor}`}>
-                  {f.number}
-                </span>
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="var(--color-brand-green-700)"
-                  stroke-width="1.5"
-                  set:html={f.icon}
-                />
-              </div>
-              <h3 class="mb-2 text-lg font-bold text-brand-navy">{f.title}</h3>
-              <p class="m-0 text-sm leading-relaxed text-brand-navy/70">
-                {f.body}
-              </p>
-            </div>
-          ))
-        }
-
         <div
-          class="flex flex-col justify-between gap-4 rounded-3xl bg-brand-green-100 p-6 text-center shadow-sm"
+          class="flex flex-col justify-between gap-4 rounded-3xl bg-brand-green-100 p-6 text-center shadow-sm sm:flex-row sm:items-center sm:text-left"
         >
-          <div class="space-y-4">
-            <div
-              class="flex flex-col items-center gap-3 sm:flex-row sm:justify-between sm:text-left"
+          <div class="min-w-0">
+            <h3 class="text-xl font-bold text-brand-navy">
+              See KLEPON against your own model
+            </h3>
+            <p
+              class="mx-auto mt-2 max-w-[34rem] text-sm leading-relaxed text-brand-navy/75 sm:mx-0"
             >
-              <div class="min-w-0">
-                <h3 class="text-xl font-bold text-brand-navy">
-                  Contact for an online demonstration
-                </h3>
-                <p
-                  class="mx-auto mt-2 max-w-[34rem] text-sm leading-relaxed text-brand-navy/75 sm:mx-0"
-                >
-                  See a live walkthrough of KLEPON in action and learn how it
-                  keeps Revit model data connected across design, coordination,
-                  and delivery.
-                </p>
-              </div>
-            </div>
+              Access is issued per account, not sold as an instant download —
+              tell us about your team and we'll set up a session against a
+              project you're already working on.
+            </p>
           </div>
-          <Button variant="primary" class="mx-auto w-full text-white sm:w-auto">
+          <Button
+            variant="primary"
+            class="mx-auto w-full shrink-0 text-white sm:w-auto"
+          >
             Contact Us
             <svg
               width="18"
@@ -427,7 +684,7 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
           </Button>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <section
       class="relative mx-8 mb-16 grid grid-cols-1 items-center gap-8 overflow-hidden rounded-[2.5rem] bg-brand-gradient-rtl p-8 md:grid-cols-12"
@@ -441,16 +698,19 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
       </div>
       <div class="relative md:col-span-7">
         <h2 class="mb-3.5 text-[1.625rem] font-extrabold text-white">
-          Build Smarter Fire Protection Workflows
+          Bring KLEPON Into Your Next Project
         </h2>
         <p class="mb-6 max-w-[56ch] text-body leading-relaxed text-white/75">
-          Automate repetitive work, connect your workflows, and save countless
-          hours of engineering time.
+          One ribbon tab in Revit covers hydraulic calculation, sprinkler
+          modelling, P&ID generation, and prefab tracking — all from the model
+          you're already building.
         </p>
         <div class="flex flex-wrap gap-3">
+          <!-- TODO: confirm this flow exists before shipping — see artifact's Confirm Before Publish tab -->
           <Button variant="primary" class="text-white"
             >Request Trial Access</Button
           >
+          <!-- TODO: confirm this flow exists before shipping — see artifact's Confirm Before Publish tab -->
           <a
             href="#"
             class="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-8 py-3.5 font-brand text-base font-semibold text-white no-underline hover:bg-white/10"
@@ -496,6 +756,349 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
         }
         to {
           transform: rotate(360deg);
+        }
+      }
+    </style>
+
+    <style is:global>
+      /* is:global, not "Astro's normal scoping reaches this fine" like
+         the comment used to claim: .wheel-conn/.wheel-dot/.wheel-particle
+         are created at runtime via document.createElementNS, so they
+         never receive Astro's data-astro-cid-* scope attribute the way
+         .wheel-card/.wheel-ring (written directly in this template) do.
+         A scoped version of this block silently never matched those
+         three classes at all — not just their idle-motion animation, but
+         their base fill/stroke color, which is why the connector lines
+         turned out to have been invisible (stroke: none) since this
+         component's very first runtime-layout rebuild. Confirmed via a
+         live computed-style check, not assumed. Every selector below is
+         uniquely wheel-* prefixed, so going global carries no real
+         collision risk.
+
+         Third rebuild of this component. The first two tried to
+         precompute card positions at build time (evenly-spaced, then a
+         scaled-percentage port of the reference's angles) and both
+         produced overlapping cards once actually screenshotted — the
+         reference avoids that with a runtime layout pass that measures
+         each card's real rendered box, which a build-time-only approach
+         fundamentally can't do. #wheel-frame/#wheel-scaler/#wheel-stage
+         and the layout()/fit() functions in the script below are ported
+         directly from the reference's own .frame/.scaler/.stage and its
+         layout()/fit(), at its real 1180×760 scale — just recolored to
+         this site's system and without GSAP (the reveal still runs
+         through the site's existing IntersectionObserver convention). */
+
+      .wheel-frame {
+        position: relative;
+        width: 100%;
+      }
+      .wheel-scaler {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 1180px;
+        height: 760px;
+        transform-origin: top center;
+      }
+      .wheel-stage {
+        position: absolute;
+        inset: 0;
+      }
+      .wheel-svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+      }
+
+      .wheel-ring {
+        fill: none;
+        stroke-width: 6;
+        stroke-linecap: round;
+        stroke-opacity: 0.5;
+        transition: stroke-dashoffset 700ms ease-out;
+      }
+      .wheel-conn {
+        fill: none;
+        stroke: color-mix(in srgb, var(--color-brand-navy) 20%, transparent);
+        stroke-width: 2;
+        transition: stroke-dashoffset 500ms ease-out;
+      }
+      .wheel-frame.is-visible .wheel-ring,
+      .wheel-frame.is-visible .wheel-conn {
+        stroke-dashoffset: 0 !important;
+      }
+
+      .wheel-hubdisc {
+        fill: var(--color-brand-bg);
+        stroke: color-mix(in srgb, var(--color-brand-navy) 15%, transparent);
+        stroke-width: 2;
+        opacity: 0;
+        transform-origin: 590px 380px;
+        transform: scale(0.8);
+        transition:
+          opacity 400ms ease-out,
+          transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .wheel-pipe path {
+        fill: none;
+        stroke: var(--color-brand-green-600);
+        stroke-width: 5.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .wheel-nodes rect {
+        fill: var(--color-brand-green-600);
+      }
+      .wheel-pipe,
+      .wheel-nodes {
+        opacity: 0;
+        transform-origin: 590px 380px;
+        transform: scale(0.8);
+        transition:
+          opacity 400ms ease-out 80ms,
+          transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1) 80ms;
+      }
+      .wheel-frame.is-visible .wheel-hubdisc,
+      .wheel-frame.is-visible .wheel-pipe,
+      .wheel-frame.is-visible .wheel-nodes {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .wheel-dot {
+        opacity: 0;
+        transform-origin: center;
+        transform: scale(0);
+        transition:
+          opacity 300ms ease-out,
+          transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .wheel-frame.is-visible .wheel-dot {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      /* ---- idle-state ambient motion (rings orbiting, hub breathing) —
+         the reference's "Phase 2" loops (minus its particle flow and dot
+         twinkle, both removed after review), ported to plain CSS
+         @keyframes instead of GSAP's repeat:-1 tweens. Only starts once
+         .is-visible is set (an animation-delay long enough to clear the
+         entrance transition first, so the two don't fight over
+         `transform` mid-handoff), and only under prefers-reduced-motion:
+         no-preference. ---- */
+      @media (prefers-reduced-motion: no-preference) {
+        .wheel-frame.is-visible .wheel-ring {
+          animation: wheel-ring-spin-a 64s linear infinite;
+          animation-delay: 700ms;
+          transform-box: view-box;
+          transform-origin: 590px 380px;
+        }
+        .wheel-frame.is-visible .wheel-ring:nth-child(2) {
+          animation-name: wheel-ring-spin-b;
+          animation-duration: 88s;
+        }
+        .wheel-frame.is-visible .wheel-ring:nth-child(3) {
+          animation-name: wheel-ring-spin-a;
+          animation-duration: 120s;
+        }
+        @keyframes wheel-ring-spin-a {
+          from {
+            rotate: 0deg;
+          }
+          to {
+            rotate: 360deg;
+          }
+        }
+        @keyframes wheel-ring-spin-b {
+          from {
+            rotate: 0deg;
+          }
+          to {
+            rotate: -360deg;
+          }
+        }
+
+        .wheel-frame.is-visible .wheel-hub {
+          animation: wheel-hub-breathe 2.4s ease-in-out infinite alternate;
+          animation-delay: 700ms;
+        }
+        @keyframes wheel-hub-breathe {
+          from {
+            transform: translateY(0) scale(1);
+          }
+          to {
+            transform: translateY(-7px) scale(1);
+          }
+        }
+      }
+
+      .wheel-hub {
+        position: absolute;
+        width: 66px;
+        height: 66px;
+        margin: -33px 0 0 -33px;
+        z-index: 3;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        background: var(--color-brand-navy);
+        color: #fff;
+        font-weight: 900;
+        font-size: 32px;
+        box-shadow: var(--shadow-elev-md);
+        opacity: 0;
+        transform: scale(0.5);
+        transition:
+          opacity 400ms ease-out 100ms,
+          transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1) 100ms;
+      }
+      .wheel-frame.is-visible .wheel-hub {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .wheel-tag {
+        position: absolute;
+        z-index: 4;
+        white-space: nowrap;
+        border-radius: 9999px;
+        padding: 5px 12px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #fff;
+        box-shadow: var(--shadow-elev-sm);
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.6);
+        transition:
+          opacity 350ms ease-out,
+          transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .wheel-frame.is-visible .wheel-tag {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      .wheel-card {
+        position: absolute;
+        z-index: 4;
+        width: 250px;
+        padding: 14px 16px 15px;
+        background: #fff;
+        border: 1px solid
+          color-mix(in srgb, var(--color-brand-navy) 10%, transparent);
+        border-left: 3px solid var(--color-brand-green-600);
+        border-radius: 14px;
+        box-shadow: var(--shadow-elev-md);
+        cursor: default;
+        opacity: 0;
+        /* --ox/--oy (set per-card via JS, from its own spoke angle) push
+           the starting point outward; converging to 0 on reveal is what
+           makes it read as flying in toward its docked position, not
+           just fading up where it already sits. */
+        transform: translate(var(--ox, 0), var(--oy, 0)) scale(0.85);
+        transition:
+          opacity 500ms ease-out,
+          transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1),
+          box-shadow 250ms ease-out,
+          border-left-width 250ms ease-out;
+      }
+      .wheel-card.wheel-card-lg {
+        width: 360px;
+      }
+      .wheel-frame.is-visible .wheel-card {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+      }
+      .wheel-card-eyebrow {
+        margin: 0 0 6px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: color-mix(in srgb, var(--color-brand-navy) 45%, transparent);
+      }
+      .wheel-card-title {
+        margin: 0;
+        font-weight: 900;
+        letter-spacing: -0.01em;
+        line-height: 1.02;
+        font-size: 22px;
+        text-transform: uppercase;
+        color: var(--color-brand-navy);
+      }
+      .wheel-card-lg .wheel-card-title {
+        font-size: 32px;
+      }
+      .wheel-card-items {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin: 11px 0 0;
+        padding: 0;
+      }
+      .wheel-card-items li {
+        font-size: 11px;
+        font-weight: 500;
+        color: color-mix(in srgb, var(--color-brand-navy) 70%, transparent);
+        background: var(--color-brand-bg);
+        border: 1px solid
+          color-mix(in srgb, var(--color-brand-navy) 10%, transparent);
+        border-radius: 6px;
+        padding: 5px 9px;
+      }
+
+      .wheel .wheel-card:hover,
+      .wheel-card:focus-visible {
+        z-index: 10;
+        box-shadow: var(--shadow-elev-lg);
+        border-left-width: 5px;
+      }
+      @media (hover: hover) {
+        .wheel-frame:has(.wheel-card:hover) .wheel-card:not(:hover),
+        .wheel-frame:has(.wheel-card:hover) .wheel-tag {
+          opacity: 0.4;
+          transition: opacity 250ms ease-out;
+        }
+        .wheel-frame:has(.wheel-card:hover) .wheel-conn,
+        .wheel-frame:has(.wheel-card:hover) .wheel-dot,
+        .wheel-frame:has(.wheel-card:hover) .wheel-ring {
+          opacity: 0.3;
+          transition: opacity 250ms ease-out;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .wheel-ring,
+        .wheel-conn {
+          transition: none;
+        }
+        .wheel-hubdisc,
+        .wheel-pipe,
+        .wheel-nodes,
+        .wheel-dot {
+          transition: none;
+          opacity: 1;
+          transform: scale(1);
+        }
+        .wheel-hub {
+          transition: none;
+          opacity: 1;
+          transform: scale(1);
+        }
+        .wheel-tag {
+          transition: none;
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
+        .wheel-card {
+          transition: none;
+          opacity: 1;
+          transform: scale(1);
         }
       }
     </style>
@@ -570,14 +1173,190 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
         });
       }
 
+      // Capability wheel ("Single Source of Truth"): a vanilla-JS port of
+      // the reference prototype's own layout()/fit() — no GSAP. Runtime
+      // measurement (card.offsetWidth/offsetHeight) is the actual reason
+      // the reference's cards never overlap despite four of them sharing
+      // only a ~142° arc; a build-time-only approach can't know real
+      // rendered sizes, which is what broke the two earlier attempts at
+      // this component once they were actually screenshotted.
+      (function initCapabilityWheel() {
+        const frame = document.getElementById(
+          "wheel-frame",
+        ) as HTMLElement | null;
+        if (!frame) return;
+
+        const scaler = document.getElementById(
+          "wheel-scaler",
+        ) as HTMLElement | null;
+        const gConns = document.getElementById(
+          "wheel-conns",
+        ) as SVGGElement | null;
+        const gDots = document.getElementById(
+          "wheel-dots",
+        ) as SVGGElement | null;
+        if (!scaler || !gConns || !gDots) return;
+
+        const NS = "http://www.w3.org/2000/svg";
+
+        const CX = 590;
+        const CY = 380;
+        const HUB_R = 138; // where connectors leave the hub
+        const CARD_R = 262; // how far out the cards anchor
+
+        const polar = (r: number, deg: number) => {
+          const a = (deg * Math.PI) / 180;
+          return [CX + r * Math.cos(a), CY + r * Math.sin(a)] as const;
+        };
+
+        const armDraw = (el: SVGPathElement | SVGCircleElement) => {
+          const length = el.getTotalLength();
+          el.setAttribute("stroke-dasharray", String(length));
+          el.setAttribute("stroke-dashoffset", String(length));
+        };
+
+        // One connector + dot per card, built the same way the reference
+        // does — dynamically, docked to that card's own angle.
+        const spokes = Array.from(
+          document.querySelectorAll(".wheel-card") as NodeListOf<HTMLElement>,
+        ).map((card) => {
+          const conn = document.createElementNS(NS, "path") as SVGPathElement;
+          conn.setAttribute("class", "wheel-conn");
+          gConns.appendChild(conn);
+
+          const dot = document.createElementNS(
+            NS,
+            "circle",
+          ) as SVGCircleElement;
+          dot.setAttribute("class", "wheel-dot");
+          dot.setAttribute("r", "7");
+          dot.setAttribute("fill", "var(--color-brand-green-600)");
+          gDots.appendChild(dot);
+
+          const tag = document.querySelector(
+            `.wheel-tag[data-for="${card.dataset.id}"]`,
+          ) as HTMLElement | null;
+
+          return {
+            card,
+            conn,
+            dot,
+            tag,
+            angle: Number(card.dataset.angle),
+          };
+        });
+
+        // --ox/--oy: how far outward, along this card's own spoke, the
+        // entrance transition starts from — the card converges in toward
+        // its real (docked) position rather than just fading up in
+        // place. Set once, from angle alone, so it doesn't need to wait
+        // on layout()'s per-card measurements.
+        spokes.forEach((s) => {
+          const a = (s.angle * Math.PI) / 180;
+          s.card.style.setProperty("--ox", `${Math.cos(a) * 44}px`);
+          s.card.style.setProperty("--oy", `${Math.sin(a) * 44}px`);
+        });
+
+        // Place each card from its angle, then dock its connector/dot/tag
+        // to it — ported directly from the reference's layout(), same
+        // branching per direction so the connector always meets whichever
+        // edge actually faces the hub.
+        function layout() {
+          spokes.forEach((s) => {
+            const a = (s.angle * Math.PI) / 180;
+            const dx = Math.cos(a);
+            const dy = Math.sin(a);
+            const w = s.card.offsetWidth;
+            const h = s.card.offsetHeight;
+            const [ax, ay] = polar(CARD_R, s.angle);
+            let left: number;
+            let top: number;
+            let inner: [number, number];
+
+            if (dx > 0.28) {
+              left = ax + 14;
+              top = ay - h / 2;
+              inner = [left, top + h / 2];
+            } else if (dx < -0.28) {
+              left = ax - 14 - w;
+              top = ay - h / 2;
+              inner = [left + w, top + h / 2];
+            } else if (dy < 0) {
+              left = ax - w / 2;
+              top = ay - h - 14;
+              inner = [left + w / 2, top + h];
+            } else {
+              left = ax - w / 2;
+              top = ay + 14;
+              inner = [left + w / 2, top];
+            }
+            left = Math.max(6, Math.min(left, 1180 - w - 6));
+            top = Math.max(6, Math.min(top, 760 - h - 6));
+            s.card.style.left = `${left}px`;
+            s.card.style.top = `${top}px`;
+
+            const p0 = polar(HUB_R, s.angle);
+            const p1 = inner;
+            s.conn.setAttribute(
+              "d",
+              `M ${p0[0].toFixed(1)} ${p0[1].toFixed(1)} L ${p1[0].toFixed(1)} ${p1[1].toFixed(1)}`,
+            );
+
+            const lerp = (t: number) =>
+              [
+                p0[0] + (p1[0] - p0[0]) * t,
+                p0[1] + (p1[1] - p0[1]) * t,
+              ] as const;
+            const dotPos = lerp(0.42);
+            const tagPos = lerp(0.72);
+            s.dot.setAttribute("cx", String(dotPos[0]));
+            s.dot.setAttribute("cy", String(dotPos[1]));
+            if (s.tag) {
+              s.tag.style.left = `${tagPos[0]}px`;
+              s.tag.style.top = `${tagPos[1]}px`;
+            }
+          });
+        }
+
+        // Scale the fixed 1180×760 stage down to whatever width the
+        // section actually has (never up — 1180 is the ceiling).
+        function fit() {
+          if (!frame || !scaler) return;
+
+          const scale = Math.min(1, frame.clientWidth / 1180);
+          scaler.style.transform = `translateX(-50%) scale(${scale})`;
+          frame.style.height = `${760 * scale}px`;
+        }
+
+        layout();
+        // Arm the draw-on AFTER layout has given every path its real `d`
+        // — getTotalLength() needs an actual path to measure. Only once:
+        // resize below re-runs layout()/fit() but deliberately doesn't
+        // re-arm, so an already-revealed connector just reflows to its
+        // new dock point instead of replaying the draw-in.
+        Array.from(
+          document.querySelectorAll(
+            ".wheel-ring",
+          ) as NodeListOf<SVGPathElement>,
+        ).forEach(armDraw);
+        spokes.forEach((s) => armDraw(s.conn));
+        fit();
+
+        window.addEventListener("resize", () => {
+          layout();
+          fit();
+        });
+      })();
+
       // Scroll-triggered reveal for [data-reveal] rows (currently just
-      // the Solutions list) — fades/slides in the first time each row
-      // crosses into view, then stops watching it. Separate from the
-      // GSAP timeline above: that's a one-shot load animation for the
-      // hero; this is IntersectionObserver + a plain CSS transition
-      // (opacity/translate, toggled via .is-visible), since a simple
-      // per-element "reveal once" doesn't need a timeline library.
-      const revealTargets = document.querySelectorAll("[data-reveal]");
+      // the Solutions list). Keep the animation tied to the viewport so it
+      // replays when each row re-enters view while scrolling back upward or
+      // downward again. Separate from the GSAP timeline above: that's a
+      // one-shot load animation for the hero; this is IntersectionObserver +
+      // a plain CSS transition (opacity/translate, toggled via .is-visible).
+      const revealTargets = document.querySelectorAll(
+        "[data-reveal]",
+      ) as NodeListOf<HTMLElement>;
       if (revealTargets.length) {
         if (reduceMotion) {
           revealTargets.forEach((el) => el.classList.add("is-visible"));
@@ -587,7 +1366,8 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
               for (const entry of entries) {
                 if (entry.isIntersecting) {
                   entry.target.classList.add("is-visible");
-                  revealObserver.unobserve(entry.target);
+                } else {
+                  entry.target.classList.remove("is-visible");
                 }
               }
             },
