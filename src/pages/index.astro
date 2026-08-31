@@ -622,11 +622,9 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
                   data-angle={node.angle}
                   tabindex="0"
                 >
-                  {node.eyebrow && (
-                    <p class="wheel-card-eyebrow">{node.eyebrow}</p>
-                  )}
                   <h3 class="wheel-card-title">{node.title}</h3>
                   <ul class="wheel-card-items">
+                    {node.eyebrow && <li>{node.eyebrow}</li>}
                     {node.items.map((item) => (
                       <li>{item}</li>
                     ))}
@@ -669,16 +667,9 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
               class="rounded-3xl border border-brand-navy/10 bg-white p-5 opacity-0 translate-y-6 shadow-sm transition-all duration-700 ease-out [&.is-visible]:translate-y-0 [&.is-visible]:opacity-100"
             >
               <div class="mb-3 flex items-start justify-between gap-3">
-                <div>
-                  {node.eyebrow && (
-                    <p class="mb-1 text-[10px] font-bold uppercase leading-tight tracking-wide text-brand-navy/40">
-                      {node.eyebrow}
-                    </p>
-                  )}
-                  <h3 class="text-lg font-black uppercase leading-tight text-brand-navy">
-                    {node.title}
-                  </h3>
-                </div>
+                <h3 class="text-lg font-black uppercase leading-tight text-brand-navy">
+                  {node.title}
+                </h3>
                 <span
                   class="shrink-0 whitespace-nowrap rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white"
                   style={`background-color: ${WHEEL_GREEN}`}
@@ -687,6 +678,11 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
                 </span>
               </div>
               <ul class="m-0 flex flex-wrap gap-1.5 p-0">
+                {node.eyebrow && (
+                  <li class="rounded-md border border-brand-navy/10 bg-brand-bg px-2 py-1 text-xs font-medium text-brand-navy/70">
+                    {node.eyebrow}
+                  </li>
+                )}
                 {node.items.map((item) => (
                   <li class="rounded-md border border-brand-navy/10 bg-brand-bg px-2 py-1 text-xs font-medium text-brand-navy/70">
                     {item}
@@ -1194,14 +1190,6 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
       .wheel-frame.is-visible .wheel-card {
         opacity: 1;
         transform: translate(0, 0) scale(1);
-      }
-      .wheel-card-eyebrow {
-        margin: 0 0 6px;
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: color-mix(in srgb, var(--color-brand-navy) 45%, transparent);
       }
       .wheel-card-title {
         margin: 0;
