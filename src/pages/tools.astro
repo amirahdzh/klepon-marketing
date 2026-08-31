@@ -58,22 +58,17 @@ const tools = [
     status: "Available",
     image: "/P&ID generator.png",
   },
-];
-
-// The 2 tools with no product imagery yet — kept as the original compact
-// icon cards rather than forced into the row layout above.
-const otherTools = [
   {
     title: "Drawing List Tools",
     body: "Automatically generate and maintain drawing lists, sheet numbering, and revision tracking directly from the model.",
     status: "Available",
-    icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h6"/>',
+    image: "/Drawing List Tools20.png",
   },
   {
     title: "Clash & Coordination Tools",
     body: "Identify and resolve coordination issues across disciplines before they reach the field, directly from the fire system model.",
     status: "Beta",
-    icon: '<path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/>',
+    image: "/Clash & Coordination Tools20.png",
   },
 ];
 
@@ -301,49 +296,6 @@ const steps = [
             </div>
           ))
         }
-      </div>
-
-      <div class="mx-auto mt-16 max-w-3xl">
-        <p class="mb-6 text-center text-label font-bold uppercase tracking-wide text-brand-navy/50">
-          Also Included
-        </p>
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          {
-            otherTools.map((t) => (
-              <div class="flex flex-col items-start gap-2 rounded-3xl border border-brand-navy/10 bg-white p-6 shadow-sm transition-shadow duration-200 hover:shadow-elev-md">
-                <div class="flex w-full items-start justify-between gap-3">
-                  <svg
-                    width="26"
-                    height="26"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="var(--color-brand-green-700)"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                    set:html={t.icon}
-                  />
-                  <span
-                    class={`shrink-0 rounded-full border px-3 py-1 text-micro-sm font-semibold uppercase tracking-wide ${
-                      t.status === "Beta"
-                        ? "border-brand-amber text-brand-amber"
-                        : "border-brand-navy/15 text-brand-navy/60"
-                    }`}
-                  >
-                    {t.status}
-                  </span>
-                </div>
-                <div class="mt-1.5 font-heading text-lg font-bold text-brand-navy">
-                  {t.title}
-                </div>
-                <p class="m-0 flex-1 text-label leading-relaxed text-brand-navy/70">
-                  {t.body}
-                </p>
-              </div>
-            ))
-          }
-        </div>
       </div>
     </section>
 

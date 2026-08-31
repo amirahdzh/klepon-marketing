@@ -903,15 +903,14 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
         class="relative flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center"
       >
         <h2
-          class="text-[1.75rem] font-extrabold leading-tight text-brand-navy sm:text-[2rem]"
+          class="text-[1.75rem] font-bold leading-tight text-brand-navy sm:text-[2rem]"
         >
           Bring KLEPON Into Your Next Project
         </h2>
         <Button
           href="mailto:support@klepon.systems?subject=KLEPON%20Trial%20Access%20Request"
           variant="primary"
-          class="shrink-0 text-white"
-          >Request Trial Access</Button
+          class="shrink-0 text-white">Request Trial Access</Button
         >
       </div>
     </section>
@@ -1178,6 +1177,12 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
         background: #fff;
         border: 1px solid
           color-mix(in srgb, var(--color-brand-navy) 10%, transparent);
+        /* Subtilized, not removed, per the detector's own "thick colored
+           border" flag: 2px (was 3px) and a muted 45%-mix (was full-
+           saturation) so it reads as a quiet accent instead of a bold
+           side-tab. */
+        border-left: 2px solid
+          color-mix(in srgb, var(--color-brand-green-600) 45%, transparent);
         border-radius: 22px;
         box-shadow: var(--shadow-elev-md);
         cursor: default;
