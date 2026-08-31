@@ -50,7 +50,7 @@ const currentPath = Astro.url.pathname;
       Request Trial
     </a> -->
     <a
-      href="#"
+      href="mailto:support@klepon.systems?subject=KLEPON%20Trial%20Access%20Request"
       class="hidden rounded-full bg-brand-amber px-5 py-2.5 text-sm font-semibold text-brand-navy no-underline transition-colors sm:inline-flex"
     >
       <span class="hidden sm:inline">Request Trial Access</span>
@@ -75,8 +75,16 @@ const currentPath = Astro.url.pathname;
           <path d="M4 18h16"></path>
         </svg>
       </summary>
+      {
+        /* White surface (not bg-brand-navy) — this dropdown opens on top
+           of a navy hero on both home and tools, where a navy panel with
+           a faint shadow was nearly invisible against the matching
+           background. Matches the .card convention used everywhere else
+           on the site instead of depending on which page/scroll state
+           is underneath it. */
+      }
       <div
-        class="absolute right-0 top-full z-50 mt-3 flex w-48 flex-col gap-4 rounded-2xl bg-brand-navy p-4 text-white shadow-elev-md"
+        class="absolute right-0 top-full z-50 mt-3 flex w-48 flex-col gap-4 rounded-2xl border border-brand-navy/10 bg-white p-4 text-brand-navy shadow-elev-md"
       >
         {
           links.map((link) => (
@@ -85,8 +93,8 @@ const currentPath = Astro.url.pathname;
               aria-current={currentPath === link.href ? "page" : undefined}
               class={`text-sm font-medium no-underline ${
                 currentPath === link.href
-                  ? "text-accent-200"
-                  : "text-white/75 hover:text-accent-200"
+                  ? "text-brand-green-700"
+                  : "text-brand-navy/75 hover:text-brand-green-700"
               }`}
             >
               {link.label}
@@ -97,13 +105,13 @@ const currentPath = Astro.url.pathname;
           href="https://api.klepon.systems/Portal/Login"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-sm font-medium text-white/75 no-underline hover:text-accent-200"
+          class="text-sm font-medium text-brand-navy/75 no-underline hover:text-brand-green-700"
         >
           Login
         </a>
         <a
-          href="#"
-          class="text-sm font-medium text-white/75 no-underline hover:text-accent-200"
+          href="mailto:support@klepon.systems?subject=KLEPON%20Trial%20Access%20Request"
+          class="text-sm font-medium text-brand-navy/75 no-underline hover:text-brand-green-700"
         >
           Download Trial
         </a>

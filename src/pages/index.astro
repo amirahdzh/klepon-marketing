@@ -257,7 +257,11 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
               turn their models into accurate, construction-ready information.
             </p>
             <div class="grid gap-3 sm:flex sm:flex-wrap sm:items-center">
-              <Button variant="primary" class="w-full text-white sm:w-auto">
+              <Button
+                href="mailto:support@klepon.systems?subject=KLEPON%20Trial%20Access%20Request"
+                variant="primary"
+                class="w-full text-white sm:w-auto"
+              >
                 Request Trial Access
               </Button>
               <Button
@@ -795,7 +799,11 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
               </div>
             </div>
           </div>
-          <Button variant="primary" class="mx-auto w-full text-white sm:w-auto">
+          <Button
+            href="mailto:support@klepon.systems?subject=KLEPON%20Online%20Demo%20Request"
+            variant="primary"
+            class="mx-auto w-full text-white sm:w-auto"
+          >
             Contact Us
             <svg
               width="18"
@@ -899,8 +907,10 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
         >
           Bring KLEPON Into Your Next Project
         </h2>
-        <!-- TODO: confirm this flow exists before shipping — see artifact's Confirm Before Publish tab -->
-        <Button variant="primary" class="shrink-0 text-white"
+        <Button
+          href="mailto:support@klepon.systems?subject=KLEPON%20Trial%20Access%20Request"
+          variant="primary"
+          class="shrink-0 text-white"
           >Request Trial Access</Button
         >
       </div>
@@ -1021,7 +1031,7 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
         transform: scale(0.8);
         transition:
           opacity 400ms ease-out 80ms,
-          transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1) 80ms;
+          transform 500ms cubic-bezier(0.16, 1, 0.3, 1) 80ms;
       }
       .wheel-frame.is-visible .wheel-pipe,
       .wheel-frame.is-visible .wheel-nodes {
@@ -1035,7 +1045,7 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
         transform: scale(0);
         transition:
           opacity 300ms ease-out,
-          transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+          transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
       }
       .wheel-frame.is-visible .wheel-dot {
         opacity: 1;
@@ -1110,7 +1120,7 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
         transform: scale(0.8);
         transition:
           opacity 400ms ease-out,
-          transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+          transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
       }
       .wheel-frame.is-visible .wheel-hub-photo {
         opacity: 1;
@@ -1130,7 +1140,7 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
         transform: scale(0.5);
         transition:
           opacity 400ms ease-out 100ms,
-          transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1) 100ms;
+          transform 500ms cubic-bezier(0.16, 1, 0.3, 1) 100ms;
       }
       .wheel-frame.is-visible .wheel-hub {
         opacity: 1;
@@ -1153,7 +1163,7 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
         transform: translate(-50%, -50%) scale(0.6);
         transition:
           opacity 350ms ease-out,
-          transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+          transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
       }
       .wheel-frame.is-visible .wheel-tag {
         opacity: 1;
@@ -1168,8 +1178,7 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
         background: #fff;
         border: 1px solid
           color-mix(in srgb, var(--color-brand-navy) 10%, transparent);
-        border-left: 3px solid var(--color-brand-green-600);
-        border-radius: 14px;
+        border-radius: 22px;
         box-shadow: var(--shadow-elev-md);
         cursor: default;
         opacity: 0;
@@ -1180,9 +1189,8 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
         transform: translate(var(--ox, 0), var(--oy, 0)) scale(0.85);
         transition:
           opacity 500ms ease-out,
-          transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1),
-          box-shadow 250ms ease-out,
-          border-left-width 250ms ease-out;
+          transform 600ms cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 250ms ease-out;
       }
       .wheel-card.wheel-card-lg {
         width: 360px;
@@ -1218,7 +1226,7 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
         background: var(--color-brand-bg);
         border: 1px solid
           color-mix(in srgb, var(--color-brand-navy) 10%, transparent);
-        border-radius: 6px;
+        border-radius: 16px;
         padding: 5px 9px;
       }
 
@@ -1239,12 +1247,10 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
       .wheel-frame.is-visible .wheel-card:focus-visible {
         z-index: 10;
         box-shadow: var(--shadow-elev-lg);
-        border-left-width: 5px;
         transform: translate(0, 0) scale(1.06);
         transition:
           transform 200ms ease-out,
-          box-shadow 200ms ease-out,
-          border-left-width 200ms ease-out;
+          box-shadow 200ms ease-out;
       }
       @media (hover: hover) {
         .wheel-frame:has(.wheel-card:hover) .wheel-card:not(:hover),
