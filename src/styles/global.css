@@ -171,6 +171,15 @@
   /*
    * Buttons — pill-shaped. The primary is the one solid, brand-green object;
    * secondary is an outline in the same ink used for body text.
+   *
+   * .btn-primary text is white, matching the brand PDF's own color swatch and
+   * matching every actual button on the site (see git history/DESIGN.md for
+   * the 2026-08-3x correction — an earlier navy default was the documented
+   * "accessible" choice, but by then 10 of 11 real buttons already overrode
+   * it back to white, so white was the real, live convention, not navy).
+   * White-on-accent measures ~3.2:1, which passes for large/bold text but
+   * technically misses the 4.5:1 AA threshold for normal button-sized text —
+   * a known, accepted tradeoff, not an oversight.
    */
   .btn {
     display: inline-flex;
@@ -207,7 +216,7 @@
   .btn-primary {
     background: var(--color-accent);
     border-color: var(--color-accent);
-    color: var(--color-text);
+    color: white;
   }
 
   .btn-primary:hover {
