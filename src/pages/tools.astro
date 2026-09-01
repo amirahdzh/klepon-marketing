@@ -86,7 +86,10 @@ const packages = [
     price: "€200 / year",
     tagline:
       "Model, calculate, and document the fire protection system before anything gets built.",
-    features: ["Fire System Modelling Tools", "Interactive Hydraulic Calculations"],
+    features: [
+      "Fire System Modelling Tools",
+      "Interactive Hydraulic Calculations",
+    ],
   },
   {
     name: "Build",
@@ -157,17 +160,23 @@ const steps = [
             <h1
               class="mb-5 text-[2rem] font-extrabold leading-[1.5] tracking-tight text-white uppercase sm:text-[2.25rem]"
             >
-              Fire Design <span class="text-brand-amber">Tools</span> for Every
-              Stage of the Model
+              Fire Design <span class="text-brand-amber">Tools</span> for Every Stage
+              of the Model
             </h1>
-            <p class="mb-7 max-w-[52ch] text-base leading-relaxed text-white/75">
+            <p
+              class="mb-7 max-w-[52ch] text-base leading-relaxed text-white/75"
+            >
               KLEPON is a set of connected Revit tools built by fire protection
               engineers — covering modelling, hydraulic calculations,
               fabrication data, and documentation, all working from the same
               model.
             </p>
             <div class="grid gap-3 sm:flex sm:flex-wrap sm:items-center">
-              <Button variant="primary" href="#packages" class="w-full sm:w-auto">
+              <Button
+                variant="primary"
+                href="#packages"
+                class="w-full sm:w-auto"
+              >
                 See Packages
               </Button>
               <Button
@@ -238,8 +247,7 @@ const steps = [
         </span>
         <span
           class="mx-auto mb-4 block h-1 w-12 bg-brand-amber"
-          aria-hidden="true"
-        ></span>
+          aria-hidden="true"></span>
         <h2 class="mb-3 text-[2rem] font-extrabold text-brand-navy">
           Every Tool Built Around Real Project Work
         </h2>
@@ -308,8 +316,7 @@ const steps = [
         </span>
         <span
           class="mx-auto mb-4 block h-1 w-12 bg-brand-amber"
-          aria-hidden="true"
-        ></span>
+          aria-hidden="true"></span>
         <h2 class="text-[2rem] font-extrabold text-brand-navy">
           From Installation to Delivery
         </h2>
@@ -363,15 +370,14 @@ const steps = [
         </span>
         <span
           class="mx-auto mb-4 block h-1 w-12 bg-brand-amber"
-          aria-hidden="true"
-        ></span>
+          aria-hidden="true"></span>
         <h2 class="mb-3 text-[2rem] font-extrabold text-brand-navy">
-          Design, Build, Or Both
+          Design, Build, Or Design & Build
         </h2>
         <p class="text-body leading-relaxed text-brand-navy/75">
           KLEPON is in closed beta — packages are provisioned per account, not
-          purchased through a self-service checkout. Get in touch and we'll
-          set your team up with the right one.
+          purchased through a self-service checkout. Get in touch and we'll set
+          your team up with the right one.
         </p>
       </div>
 
@@ -444,8 +450,12 @@ const steps = [
         }
       </div>
 
-      <p class="mx-auto mt-8 max-w-2xl text-center text-label leading-relaxed text-brand-navy/70">
-        <span class="font-semibold text-brand-green-700">Included in every plan:</span>{" "}
+      <p
+        class="mx-auto mt-8 max-w-2xl text-center text-label leading-relaxed text-brand-navy/70"
+      >
+        <span class="font-semibold text-brand-green-700"
+          >Included in every plan:</span
+        >{" "}
         {includedInEveryPlan.join(", ")}.
       </p>
     </section>
