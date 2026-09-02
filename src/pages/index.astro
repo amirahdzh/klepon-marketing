@@ -6,6 +6,9 @@ import Button from "../components/Button.astro";
 import HalftoneDots from "../components/HalftoneDots.astro";
 import KleponMark from "../components/KleponMark.astro";
 import KleponTriangle from "../components/KleponTriangle.astro";
+import { Image } from "astro:assets";
+import rvtModel2 from "../assets/img/RVT model2.png";
+import heroImg from "../assets/img/hero.png";
 
 // Use only horizontal motion for the Solutions rows so the reveal stays
 // consistent and directional without the vertical variants.
@@ -415,8 +418,8 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
         <div
           class="overflow-hidden rounded-[2rem] border border-brand-navy/10 bg-white p-3 shadow-elev-lg sm:p-4"
         >
-          <img
-            src="/hero.png"
+          <Image
+            src={heroImg}
             alt="KLEPON hydraulic and prefab properties panels shown alongside a fire protection pipe model in Revit"
             class="aspect-[9/5] w-full rounded-[1.25rem] object-cover object-bottom"
           />
@@ -601,8 +604,8 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
               class="wheel-hub-photo"
               style="left:590px; top:380px;"
             >
-              <img
-                src="/RVT model2.png"
+              <Image
+                src={rvtModel2}
                 alt="Fire protection pump room with a red standpipe network"
                 class="h-full w-full object-cover"
               />

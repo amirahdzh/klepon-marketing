@@ -1,9 +1,16 @@
 ---
+import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import Nav from "../components/Nav.astro";
 import Button from "../components/Button.astro";
 import AboutCTA from "../components/AboutCTA.astro";
 import Footer from "../components/Footer.astro";
+import fireModelingImg from "../assets/img/Fire system modeling tools.png";
+import hydraulicCalcImg from "../assets/img/Interactive Hydraulic Calculations.png";
+import pipeFabImg from "../assets/img/Pipe fabrication and procurement tools.png";
+import pidGeneratorImg from "../assets/img/P&ID generator.png";
+import drawingListImg from "../assets/img/Drawing List Tools20.png";
+import clashCoordImg from "../assets/img/Clash & Coordination Tools20.png";
 
 const heroFacts = [
   {
@@ -38,37 +45,37 @@ const tools = [
     title: "Fire System Modelling Tools",
     body: "Create, manage, and improve Revit-based fire protection models with tools designed to reduce repetitive actions, improve consistency, and speed up daily modelling work.",
     status: "Available",
-    image: "/Fire system modeling tools.png",
+    image: fireModelingImg,
   },
   {
     title: "Interactive Hydraulic Calculations",
     body: "Calculate hydraulics where the design lives — directly in Revit, with connected model data, demand points, and pipe networks in one visual workflow.",
     status: "Available",
-    image: "/Interactive Hydraulic Calculations.png",
+    image: hydraulicCalcImg,
   },
   {
     title: "Pipe Fabrication & Procurement Tools",
     body: "Generate structured pipe data, prefab outputs, material lists, and procurement information directly from the model to support construction-ready delivery.",
     status: "Available",
-    image: "/Pipe fabrication and procurement tools.png",
+    image: pipeFabImg,
   },
   {
     title: "P&ID Generator",
     body: "Create clearer system diagrams and project documentation using automated workflows linked to real engineering data.",
     status: "Available",
-    image: "/P&ID generator.png",
+    image: pidGeneratorImg,
   },
   {
     title: "Drawing List Tools",
     body: "Automatically generate and maintain drawing lists, sheet numbering, and revision tracking directly from the model.",
     status: "Available",
-    image: "/Drawing List Tools20.png",
+    image: drawingListImg,
   },
   {
     title: "Clash & Coordination Tools",
     body: "Automate clash detection and coordination workflows in Revit to reduce rework, resolve conflicts faster, and keep coordinated model data up to date.",
     status: "Beta",
-    image: "/Clash & Coordination Tools20.png",
+    image: clashCoordImg,
   },
 ];
 
@@ -273,7 +280,7 @@ const steps = [
                 class={`w-full transition-all duration-700 ease-out [.is-visible_&]:translate-x-0 [.is-visible_&]:translate-y-0 [.is-visible_&]:opacity-100 lg:w-[46%] ${revealDirections[i % revealDirections.length]}`}
               >
                 <div class="flex items-center justify-center rounded-[2rem] p-6">
-                  <img
+                  <Image
                     src={t.image}
                     alt={t.title}
                     class="aspect-[5/4] w-full max-w-[22rem] object-contain"
