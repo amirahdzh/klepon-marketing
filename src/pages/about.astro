@@ -2,13 +2,16 @@
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import Nav from "../components/Nav.astro";
-import Button from "../components/Button.astro";
 import AboutCTA from "../components/AboutCTA.astro";
 import Footer from "../components/Footer.astro";
 import aboutHeroImg from "../assets/img/about-hero.jpg";
-
-const targetIcon =
-  '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>';
+import tankParkImg from "../assets/img/Tank Park1.png";
+import rackSystemImg from "../assets/img/Rack System 3.png";
+import rackSystem1Img from "../assets/img/Rack System 1.png";
+import rackSystem5Img from "../assets/img/Rack System 5.png";
+import rackSystem7Img from "../assets/img/Rack System 7.png";
+import tankImg from "../assets/img/Tank1.png";
+import transformerImg from "../assets/img/Transformer.png";
 
 const stats = [
   { value: 150, suffix: "+", label: "Projects executed" },
@@ -16,42 +19,67 @@ const stats = [
   { value: 50000, suffix: "+", label: "Hours of design, modeling & drafting" },
 ];
 
-// PLACEHOLDER — real name, title/credential, bio, and photo needed before
-// this ships. Do not invent specifics for a real person; every bracketed
-// field below must be replaced with verified information. Single-person
-// spotlight layout, not a grid — revisit if a second person joins.
-const leader = {
-  name: "[Full Name]",
-  title: "[Role — e.g. Fire Protection Engineer]",
-  credential: "[Certification / years in the field]",
-  bio: "[Two or three sentences on their background, notable projects, and standing in the fire protection industry — what makes them a recognized figure in the field.]",
-};
+// PLACEHOLDER — real names, roles, bios, photos (and LinkedIn links, if
+// any) needed before this ships. Do not invent specifics for real people;
+// every bracketed field must be replaced with verified information.
+// `linkedin` is optional — omit or leave null for a team member without
+// one; the card just skips rendering the link. Copy stays factual (what
+// they do, not claims about how well-known they are) even once real.
+const team = [
+  {
+    name: "[Full Name]",
+    title: "[Role — e.g. Fire Protection Engineer]",
+    bio: "[A sentence or two on their background — what they've worked on, how long they've done this.]",
+    linkedin: null,
+  },
+  {
+    name: "[Full Name]",
+    title: "[Role — e.g. Fire Protection Engineer]",
+    bio: "[A sentence or two on their background — what they've worked on, how long they've done this.]",
+    linkedin: null,
+  },
+  {
+    name: "[Full Name]",
+    title: "[Role — e.g. Fire Protection Engineer]",
+    bio: "[A sentence or two on their background — what they've worked on, how long they've done this.]",
+    linkedin: null,
+  },
+];
 
 const personIcon =
   '<path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/>';
+const linkedinIcon =
+  '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>';
 
-// The founding-to-today narrative as a chronological progression rather
-// than a flat paragraph dump — titles below are presentational labels for
-// grouping, not new claims; the body text is the user-provided copy
-// verbatim (split only at existing sentence/paragraph boundaries).
+// The founding-to-today narrative as a vertical timeline. `tier` drives a
+// deliberate 3-level hierarchy (per research on timeline UI best practice:
+// establish 2-3 levels via size/color/weight together, never color alone,
+// and don't emphasize every node — when everything stands out, nothing
+// does): "support" for scene-setting/process steps, "secondary" for the
+// narrative pivot, "primary" for the one destination the whole story
+// builds to. Titles are presentational labels for grouping, not new
+// claims; body text is the user-provided copy verbatim.
 const timelineSteps = [
   {
+    tier: "support",
     title: "Years in the field",
     body: "Over the years, we have provided design and engineering support for many clients, gaining thousands of hours of hands-on project experience in real-world construction environments.",
     icon: '<path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="2" y="7" width="20" height="14" rx="2"/>',
   },
   {
+    tier: "secondary",
     title: "The turning point",
     body: "That experience taught us one clear lesson: engineering teams need better tools.",
     icon: '<path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.71.71 1.21 1.33 1.41 2.5"/>',
-    emphasis: true,
   },
   {
+    tier: "support",
     title: "Building our own tools",
     body: "Through our daily project work, we continuously searched for ways to reduce repetitive tasks, improve accuracy, speed up documentation, and deliver more reliable results. First by using other tools available on the market, whereafter step by step, we began developing our own internal tools to automate routine workflows and improve the quality of our output.",
     icon: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
   },
   {
+    tier: "primary",
     title: "KLEPON is born",
     body: "As these tools helped us deliver results faster and more efficiently than conventional 3D modelling workflows, the idea behind KLEPON was born. KLEPON focuses on developing practical, high-performance tools for engineering and construction professionals — tools created from the ground up by people who understand the work because it is part of our daily routine.",
     icon: '<path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>',
@@ -66,59 +94,190 @@ const timelineSteps = [
   <div class="mx-auto max-w-7xl">
     <Nav />
 
-    <section
-      class="relative overflow-hidden pt-24 sm:pt-28 lg:flex lg:min-h-[600px] lg:items-center lg:pt-8"
-    >
-      <div class="relative mb-8 lg:absolute lg:inset-0 lg:mb-0">
-        <Image
-          src={aboutHeroImg}
-          alt=""
-          width={1400}
-          class="h-56 w-full rounded-lg object-cover sm:h-72 lg:h-full lg:rounded-none"
-        />
-        <div
-          class="pointer-events-none hidden lg:block lg:absolute lg:inset-0"
-          style="background: linear-gradient(to right, var(--color-bg) 0%, var(--color-bg) 38%, color-mix(in srgb, var(--color-bg) 15%, transparent) 62%, transparent 80%);"
-          aria-hidden="true"
-        >
-        </div>
-      </div>
-
-      <div class="relative px-8 pb-16 lg:py-24">
-        <div class="max-w-xl">
-          <div class="mb-5">
-            <span
-              class="text-label font-bold uppercase tracking-wide text-accent-700"
-            >
-              About Us
-            </span>
-            <span class="mt-2 block h-0.5 w-9 bg-accent-700" aria-hidden="true">
-            </span>
-          </div>
-
-          <h1
-            class="mb-6 text-[2.5rem] font-extrabold leading-[1.15] tracking-tight text-text sm:text-[2.75rem]"
+    <section class="px-8 pb-4 pt-28 sm:pt-36">
+      <div class="mx-auto max-w-6xl">
+        <div class="mb-4">
+          <span
+            class="text-2xl font-extrabold uppercase tracking-wide text-accent-700 sm:text-3xl"
           >
-            Built from real fire protection engineering work.
-          </h1>
+            About Us
+          </span>
+          <span class="mt-3 block h-0.5 w-9 bg-accent-700" aria-hidden="true">
+          </span>
+        </div>
 
-          <p class="mb-4 text-body leading-relaxed text-text/85">
-            KLEPON was born in 2021 from the collaboration between Safe
-            Engineers and Dwi Highbrow Engineering — two companies with a
-            proven track record delivering fire protection engineering
-            projects across Europe, Singapore, and Australia.
-          </p>
-          <p class="mb-8 text-body leading-relaxed text-text/85">
-            Our background is deeply rooted in Revit-based fire system engineering
-            and design, including approval(s), hydraulic calculations, fire
-            studies, 3D modelling, coordination and clash resolving, material
-            lists, prefabrication and installation drawings, schedules, and
-            technical details.
+        <!-- <h1
+          class="mb-6 text-[1.5rem] font-extrabold leading-[1.25] tracking-tight text-text sm:text-[1.75rem]"
+        >
+          Built from real fire protection engineering work.
+        </h1> -->
+
+        <p class="mb-4 text-body leading-relaxed text-text/85">
+          KLEPON was founded from the long-standing collaboration between{" "}
+          <strong class="font-bold text-text">Safe Engineers</strong> and{" "}
+          <strong class="font-bold text-text">Dwi Highbrow Engineering</strong>{
+            " "
+          }
+          — two companies with a proven track record of delivering{" "}
+          <strong class="font-bold text-text">
+            hundreds of active fire protection engineering projects
+          </strong>{" "}
+          across Europe, Singapore, and Australia. Our background is deeply rooted
+          in{" "}
+          <strong class="font-bold text-text">
+            Revit-based fire system engineering and design
+          </strong>
+          , including approval(s), hydraulic calculations, fire studies, 3D modelling,
+          coordination and clash resolving, material lists, prefabrication and installation
+          drawings, schedules, and technical details.
+        </p>
+        <!-- <p class="text-body leading-relaxed text-text/85">
+          Our background is deeply rooted in{" "}
+          <strong class="font-bold text-text">
+            Revit-based fire system engineering and design
+          </strong>
+          , including approval(s), hydraulic calculations, fire studies, 3D modelling,
+          coordination and clash resolving, material lists, prefabrication and installation
+          drawings, schedules, and technical details.
+        </p> -->
+      </div>
+    </section>
+
+    {
+      /* Gallery of real KLEPON project renders, moved out of the hero
+         entirely (was a 2x2 desktop-only collage inside it) into its own
+         carousel below — keeps the hero plain text, single column, and
+         gives the imagery a browsable treatment instead of competing with
+         the headline. No max-w wrapper here on purpose, unlike every other
+         section on this page: a carousel benefits from the extra width
+         (more of the row visible at once, more room for the arrow controls
+         to sit clear of the images) where prose sections don't. Real
+         horizontal scroll + scroll-snap under the hood (so touch/trackpad
+         swipe still works and it degrades to a plain scrollable strip with
+         JS off) with arrow buttons, smooth scroll, an edge fade mask, and
+         disabled state at the ends — still not a full slider widget with
+         dot indicators.
+
+         Deliberately no auto-scroll: tried a slow rAF-driven ping-pong
+         auto-scroll, but couldn't verify it actually rendered smoothly (this
+         dev sandbox's headless test browser silently drops any
+         programmatic scroll call that isn't triggered by a real click, so
+         motion couldn't be confirmed frame-by-frame), and "probably smooth"
+         isn't good enough for something that runs unprompted the whole time
+         a visitor is on the page. Dropped rather than ship something that
+         might stutter. */
+    }
+    <section class="px-8 pb-12">
+      <div class="relative">
+        <div
+          id="about-gallery-track"
+          class="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2"
+          style="mask-image: linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent);"
+        >
+          {
+            [
+              transformerImg,
+              tankParkImg,
+              tankImg,
+              rackSystemImg,
+              rackSystem1Img,
+              rackSystem5Img,
+              rackSystem7Img,
+            ].map((img) => (
+              <div class="w-56 shrink-0 snap-start overflow-hidden  shadow-elev-sm sm:w-64 lg:w-72">
+                <Image
+                  src={img}
+                  alt=""
+                  class="aspect-[4/3] w-full object-cover"
+                />
+              </div>
+            ))
+          }
+        </div>
+
+        <button
+          type="button"
+          id="about-gallery-prev"
+          aria-label="Scroll gallery left"
+          class="absolute left-0 top-1/2 hidden h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-divider bg-white text-text shadow-elev-md transition-opacity hover:bg-surface disabled:opacity-0 sm:flex"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M15 18l-6-6 6-6"></path>
+          </svg>
+        </button>
+        <button
+          type="button"
+          id="about-gallery-next"
+          aria-label="Scroll gallery right"
+          class="absolute right-0 top-1/2 hidden h-10 w-10 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded-full border border-divider bg-white text-text shadow-elev-md transition-opacity hover:bg-surface disabled:opacity-0 sm:flex"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M9 18l6-6-6-6"></path>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <hr class="mx-8 h-px border-0 bg-divider" />
+
+    {
+      /* Stats promoted out of the hero into their own band — moved here per
+         explicit request, along with dropping the hero's CTA button
+         (duplicated the site's real conversion point) entirely. Paired with
+         a visual column and explanatory copy per a later request, rather
+         than left as bare numbers with no framing. */
+    }
+    <section class="px-8 py-16">
+      <div class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-x-14">
+        <div class="lg:col-span-5">
+          <div class="overflow-hidden rounded-[2rem] bg-surface">
+            <Image
+              src={aboutHeroImg}
+              alt=""
+              width={900}
+              class="aspect-[4/5] w-full object-cover"
+            />
+          </div>
+        </div>
+
+        <div class="lg:col-span-7">
+          <span class="mb-2.5 block text-label font-bold uppercase tracking-wide text-accent-700">
+            By The Numbers
+          </span>
+          <h2 class="mb-4 text-[2rem] font-extrabold leading-[1.3] text-text">
+            A track record built before KLEPON was a product
+          </h2>
+          <p class="mb-8 max-w-[55ch] text-body leading-relaxed text-text/75">
+            These figures come from the real fire protection engineering work
+            of Safe Engineers and Dwi Highbrow Engineering — the same
+            hands-on project experience that shaped every KLEPON tool. Every
+            project, client, and hour below happened on real jobs, for real
+            clients, before a single line of KLEPON's software was written.
           </p>
 
           <div
             data-stats-row
-            class="mb-8 grid grid-cols-1 gap-x-6 gap-y-6 border-t border-divider pt-7 sm:grid-cols-3"
+            class="grid grid-cols-1 gap-x-6 gap-y-8 border-t border-divider pt-7 sm:grid-cols-3"
           >
             {
               stats.map((stat) => (
@@ -138,12 +297,6 @@ const timelineSteps = [
               ))
             }
           </div>
-
-          <div class="flex flex-wrap items-center gap-4">
-            <Button variant="primary" size="xl" href="/tools">
-              Explore Our Tools
-            </Button>
-          </div>
         </div>
       </div>
     </section>
@@ -162,41 +315,119 @@ const timelineSteps = [
         </h2>
       </div>
 
-      <ol class="relative mx-auto flex max-w-2xl flex-col gap-10">
+      {
+        /* Timeline UI, deliberately 3-tiered rather than 4 identical steps
+           (research: establish 2-3 hierarchy levels via size + color +
+           weight together, never color alone; don't emphasize every node
+           or nothing reads as emphasized). "support" nodes are quiet scene-
+           setting; "secondary" (the turning point) gets the pull-quote
+           treatment; "primary" (KLEPON is born — the one destination the
+           whole story builds to) gets a filled marker, a highlighted card,
+           and the largest type. The connecting line is a static gray track
+           plus an accent-green fill that grows in once via IntersectionObserver
+           (see script below) — reads as the story "arriving" as you scroll,
+           not a generic fade. */
+      }
+      <ol
+        id="story-timeline"
+        class="relative mx-auto flex max-w-2xl flex-col gap-10"
+      >
         <div
-          class="absolute bottom-6 left-6 top-6 w-px bg-divider"
+          class="absolute bottom-2 left-8 top-2 w-px bg-divider"
+          aria-hidden="true"
+        >
+        </div>
+        <div
+          id="story-timeline-fill"
+          class="absolute left-8 top-2 w-px origin-top scale-y-0 bg-accent-600 transition-transform duration-[1400ms] ease-out"
+          style="bottom: 0.5rem;"
           aria-hidden="true"
         >
         </div>
         {
-          timelineSteps.map((step) => (
-            <li class="relative flex gap-5">
-              <span class="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-divider bg-bg shadow-sm">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="var(--color-accent-700)"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                  set:html={step.icon}
-                />
+          timelineSteps.map((step, i) => (
+            <li
+              data-reveal
+              style={`transition-delay: ${i * 120}ms`}
+              class="relative flex translate-y-4 gap-5 opacity-0 transition-all duration-700 ease-out [&.is-visible]:translate-y-0 [&.is-visible]:opacity-100"
+            >
+              <span class="relative z-10 flex h-16 w-16 shrink-0 items-center justify-center">
+                {step.tier === "primary" ? (
+                  <span class="flex h-16 w-16 items-center justify-center rounded-2xl bg-accent-600 shadow-elev-md">
+                    <svg
+                      width="26"
+                      height="26"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="white"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                      set:html={step.icon}
+                    />
+                  </span>
+                ) : step.tier === "secondary" ? (
+                  <span class="flex h-12 w-12 items-center justify-center rounded-2xl border-2 border-accent-300 bg-accent-100">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="var(--color-accent-700)"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                      set:html={step.icon}
+                    />
+                  </span>
+                ) : (
+                  <span class="flex h-11 w-11 items-center justify-center rounded-2xl border border-divider bg-bg shadow-sm">
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="var(--color-accent-700)"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                      set:html={step.icon}
+                    />
+                  </span>
+                )}
               </span>
-              <div class="pt-2">
-                <h3 class="mb-1.5 text-lg font-bold text-text">{step.title}</h3>
-                <p
-                  class={
-                    step.emphasis
-                      ? "m-0 max-w-[55ch] text-lg font-medium leading-relaxed text-accent-700"
-                      : "m-0 max-w-[55ch] text-body leading-relaxed text-text/75"
-                  }
-                >
-                  {step.body}
-                </p>
-              </div>
+
+              {step.tier === "primary" ? (
+                <div class="flex-1 rounded-2xl border border-accent-200 bg-accent-100 p-5 pt-4">
+                  <h3 class="mb-1.5 text-xl font-extrabold text-text">
+                    {step.title}
+                  </h3>
+                  <p class="m-0 max-w-[55ch] text-body leading-relaxed text-text/80">
+                    {step.body}
+                  </p>
+                </div>
+              ) : step.tier === "secondary" ? (
+                <div class="flex-1 pt-2.5">
+                  <h3 class="mb-1.5 text-lg font-bold text-text">
+                    {step.title}
+                  </h3>
+                  <p class="m-0 max-w-[55ch] text-lg font-medium leading-relaxed text-accent-700">
+                    {step.body}
+                  </p>
+                </div>
+              ) : (
+                <div class="flex-1 pt-2.5">
+                  <h3 class="mb-1.5 text-base font-bold text-text">
+                    {step.title}
+                  </h3>
+                  <p class="m-0 max-w-[55ch] text-body leading-relaxed text-text/70">
+                    {step.body}
+                  </p>
+                </div>
+              )}
             </li>
           ))
         }
@@ -205,97 +436,125 @@ const timelineSteps = [
 
     <hr class="mx-8 h-px border-0 bg-divider" />
 
+    {
+      /* Editorial press-kit style (Airbnb newsroom's "Founders" section is
+         the reference point) rather than a SaaS feature-card grid: the
+         photo is the dominant element — large portrait frame, no card
+         border/shadow/background competing with it — and the type below
+         stays minimal (name, title, one short line), the way a press page
+         credits people instead of pitching them. Copy stays plain ("what
+         they do"), not a credibility pitch ("how recognized they are"). */
+    }
     <section class="px-8 py-16">
       <div class="mx-auto mb-12 max-w-2xl text-center">
         <span
           class="mb-2.5 block text-label font-bold uppercase tracking-wide text-accent-700"
         >
-          Leadership
+          The Team
         </span>
         <h2 class="text-[2rem] font-extrabold leading-[1.3] text-text">
-          A recognized name in fire protection engineering
+          Built by people who do the work
         </h2>
       </div>
 
-      <div class="mx-auto max-w-4xl overflow-hidden rounded-[2.5rem] bg-white shadow-elev-sm lg:flex lg:items-stretch">
-        <div class="flex aspect-[4/3] items-center justify-center bg-surface lg:aspect-auto lg:w-72 lg:shrink-0">
-          <svg
-            width="56"
-            height="56"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="var(--color-accent-700)"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-            set:html={personIcon}
-          />
-        </div>
-        <div class="p-8 sm:p-10 lg:flex lg:flex-1 lg:flex-col lg:justify-center">
-          <div class="font-heading text-2xl font-bold text-text">
-            {leader.name}
-          </div>
-          <div class="mt-1 text-label text-accent-700">{leader.title}</div>
-          <div class="mt-1 text-micro-sm uppercase tracking-wide text-text/50">
-            {leader.credential}
-          </div>
-          <p class="mt-4 max-w-[60ch] text-body leading-relaxed text-text/75">
-            {leader.bio}
-          </p>
-        </div>
+      <div class="mx-auto grid max-w-5xl grid-cols-1 gap-10 sm:grid-cols-3 sm:gap-6">
+        {
+          team.map((member) => (
+            <div>
+              <div class="mb-5 flex aspect-[4/5] items-center justify-center overflow-hidden rounded-2xl bg-surface">
+                <svg
+                  width="64"
+                  height="64"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="var(--color-accent-700)"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  set:html={personIcon}
+                />
+              </div>
+              <div class="font-heading text-lg font-bold text-text">
+                {member.name}
+              </div>
+              <div class="text-label text-accent-700">{member.title}</div>
+              <p class="mt-2 m-0 text-body leading-relaxed text-text/70">
+                {member.bio}
+              </p>
+              {member.linkedin && (
+                <a
+                  href={member.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="mt-3 inline-flex items-center gap-1.5 text-label text-text/55 no-underline hover:text-accent-700"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    aria-hidden="true"
+                    set:html={linkedinIcon}
+                  />
+                  Connect
+                </a>
+              )}
+            </div>
+          ))
+        }
       </div>
     </section>
 
-    <section class="px-8 pb-16">
-      <div class="rounded-[2.5rem] bg-accent-100 p-8 sm:p-10">
-        <div
-          class="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-x-10 lg:items-center"
+    {
+      /* Mission statements read better as one oversized, centered
+         statement than as an icon-plus-textbox info card — research
+         confirms scale/weight as the primary device (matches the
+         "turning point" pull-quote treatment already established in Our
+         Story above, so the page's two big declarative moments now share
+         one visual language instead of two different card idioms). */
+    }
+    <section class="px-8 py-20">
+      <div class="mx-auto max-w-3xl text-center">
+        <span
+          class="mx-auto mb-6 block h-1 w-12 bg-brand-amber"
+          aria-hidden="true"
         >
-          <div class="lg:col-span-7">
-            <div class="mb-4 lg:flex lg:items-center lg:gap-6">
-              <svg
-                width="80"
-                height="80"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="var(--color-accent-700)"
-                stroke-width="1.5"
-                aria-hidden="true"
-                set:html={targetIcon}
-              />
-
-              <div class="lg:flex-1">
-                <div class="mb-2">
-                  <span
-                    class="text-label font-bold uppercase tracking-wide text-accent-700"
-                    >Our Goal Is Simple</span
-                  >
-                </div>
-                <p class="m-0 text-[1rem] leading-[1.25] tracking-wide">
-                  To build better tools than those currently available in the
-                  market and set a leading standard for fire system design
-                  worldwide.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="lg:col-span-5 lg:flex lg:items-center lg:border-l lg:border-divider lg:pl-8"
-          >
-            <p class="m-0 text-body font-medium leading-relaxed text-text/85">
-              KLEPON helps engineering work to be done fast and efficient with
-              tools you can trust.
-            </p>
-          </div>
-        </div>
+        </span>
+        <p class="text-[1.75rem] font-extrabold leading-[1.35] text-text sm:text-[2.5rem]">
+          Our goal is simple: to build{" "}
+          <span class="text-accent-700">better tools</span> than those
+          currently available in the market, and set a leading standard for
+          fire system design worldwide.
+        </p>
+        <p class="mx-auto mt-6 max-w-[46ch] text-lg leading-relaxed text-text/70">
+          KLEPON helps engineering work get done fast and efficiently, with
+          tools you can trust.
+        </p>
       </div>
     </section>
 
     <AboutCTA />
     <Footer />
   </div>
+
+  <style>
+    /* Gallery stays scrollable (touch/trackpad/keyboard) via overflow-x-auto
+       on #about-gallery-track — this just hides the native scrollbar chrome,
+       since the arrow buttons already give a visible way to scroll and a
+       scrollbar underneath was redundant clutter. No Tailwind utility
+       reaches ::-webkit-scrollbar, hence the plain CSS here. */
+    #about-gallery-track {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    #about-gallery-track::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
 
   <script>
     // Same one-shot matchMedia convention as the rest of the site's motion
@@ -337,6 +596,86 @@ const timelineSteps = [
         { threshold: 0.5 },
       );
       statEls.forEach((el) => statObserver.observe(el));
+    }
+
+    // Same [data-reveal]/.is-visible convention as /tools — per-node
+    // stagger via inline transition-delay, toggled by one shared observer.
+    const revealTargets = document.querySelectorAll("[data-reveal]");
+    if (revealTargets.length) {
+      if (reduceMotion) {
+        revealTargets.forEach((el) => el.classList.add("is-visible"));
+      } else {
+        const revealObserver = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+              } else {
+                entry.target.classList.remove("is-visible");
+              }
+            }
+          },
+          { threshold: 0, rootMargin: "0px" },
+        );
+        revealTargets.forEach((el) => revealObserver.observe(el));
+      }
+    }
+
+    // Timeline connecting line: grows from 0 to full height once, the
+    // moment the story section arrives in view — a single authored moment
+    // (not tied to individual node reveals) rather than a generic fade.
+    const storyTimeline = document.getElementById("story-timeline");
+    const storyTimelineFill = document.getElementById("story-timeline-fill");
+    if (storyTimeline && storyTimelineFill) {
+      if (reduceMotion) {
+        storyTimelineFill.style.transform = "scaleY(1)";
+      } else {
+        const fillObserver = new IntersectionObserver(
+          (entries, obs) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                storyTimelineFill.style.transform = "scaleY(1)";
+                obs.unobserve(entry.target);
+              }
+            }
+          },
+          { threshold: 0.15 },
+        );
+        fillObserver.observe(storyTimeline);
+      }
+    }
+
+    const galleryTrack = document.getElementById("about-gallery-track");
+    const galleryPrev = document.getElementById(
+      "about-gallery-prev",
+    ) as HTMLButtonElement | null;
+    const galleryNext = document.getElementById(
+      "about-gallery-next",
+    ) as HTMLButtonElement | null;
+
+    if (galleryTrack && galleryPrev && galleryNext) {
+      const scrollByCard = (direction: 1 | -1) => {
+        const card = galleryTrack.querySelector<HTMLElement>(":scope > div");
+        const gap = 16; // gap-4
+        const amount = (card?.getBoundingClientRect().width ?? 288) + gap;
+        galleryTrack.scrollBy({
+          left: direction * amount,
+          behavior: reduceMotion ? "auto" : "smooth",
+        });
+      };
+
+      const updateGalleryButtons = () => {
+        const maxScroll = galleryTrack.scrollWidth - galleryTrack.clientWidth;
+        galleryPrev.disabled = galleryTrack.scrollLeft <= 1;
+        galleryNext.disabled = galleryTrack.scrollLeft >= maxScroll - 1;
+      };
+
+      galleryPrev.addEventListener("click", () => scrollByCard(-1));
+      galleryNext.addEventListener("click", () => scrollByCard(1));
+      galleryTrack.addEventListener("scroll", updateGalleryButtons, {
+        passive: true,
+      });
+      updateGalleryButtons();
     }
   </script>
 </Layout>
