@@ -1,9 +1,15 @@
 ---
+import { Image } from "astro:assets";
+import halftonePattern from "../assets/img/halftone-white.png";
+
 /**
- * The stippled dot-circle texture from page 5 of the PDF
- * (Klepon_2026_Huisstijl_v02A) — there it's navy dots on a light card;
- * inverted to white dots here since it's meant to sit on the dark
- * navy/green gradient panels. Decorative only, so it's aria-hidden; size
+ * The real klepon-brand stippled dot-circle texture (web/assets/pattern/
+ * white.png — white dots, transparent background), used in place of the
+ * earlier hand-rolled CSS radial-gradient approximation. The source file
+ * is one large gradient-density composition rather than a small seamless
+ * tile, so it's cropped via `object-cover` (keeps dots circular, just
+ * shows whichever patch of the pattern the box's aspect ratio frames)
+ * rather than stretched to fit. Decorative only, so it's aria-hidden; size
  * and position come from the wrapper via `class`.
  */
 interface Props {
@@ -14,8 +20,14 @@ const { class: className = "" } = Astro.props;
 ---
 
 <div
-  class={`pointer-events-none absolute rounded-full ${className}`}
-  style="background-image: radial-gradient(circle, rgba(255,255,255,0.9) 1.4px, transparent 1.6px); background-size: 9px 9px; -webkit-mask-image: radial-gradient(circle, black 55%, transparent 78%); mask-image: radial-gradient(circle, black 55%, transparent 78%); opacity: 0.35;"
+  class={`pointer-events-none absolute overflow-hidden rounded-full ${className}`}
+  style="-webkit-mask-image: radial-gradient(circle, black 55%, transparent 78%); mask-image: radial-gradient(circle, black 55%, transparent 78%); opacity: 0.35;"
   aria-hidden="true"
 >
+  <Image
+    src={halftonePattern}
+    alt=""
+    width={800}
+    class="h-full w-full object-cover"
+  />
 </div>

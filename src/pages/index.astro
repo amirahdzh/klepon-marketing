@@ -9,6 +9,7 @@ import KleponTriangle from "../components/KleponTriangle.astro";
 import { Image } from "astro:assets";
 import rvtModel2 from "../assets/img/RVT model2.png";
 import heroImg from "../assets/img/hero.png";
+import heroGradient from "../assets/img/hero-gradient.jpg";
 
 // Use only horizontal motion for the Solutions rows so the reveal stays
 // consistent and directional without the vertical variants.
@@ -226,6 +227,12 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
           class="pointer-events-none absolute inset-0 overflow-hidden"
           aria-hidden="true"
         >
+          <!-- <Image
+            src={heroGradient}
+            alt=""
+            width={1920}
+            class="absolute inset-0 h-full w-full object-cover opacity-60"
+          /> -->
           <!-- <KleponMark
             data-hero-mark
             class="absolute -right-[22%] -top-[0%] hidden h-[100%] w-auto text-brand-green lg:block"
@@ -235,7 +242,7 @@ const arrowIcon = '<path d="M5 12h12"></path><path d="m13 6 6 6-6 6"></path>';
             data-anim="hero-triangle"
             class="absolute -top-[38%] left-[50%] hidden h-[165%] w-auto rotate-220 text-brand-green lg:block"
           />
-          <!-- <HalftoneDots class="-right-100 -top-24 h-400 w-400" /> -->
+          <!-- <HalftoneDots class="-right-24 -top-16 h-[26rem] w-[26rem]" /> -->
         </div>
         <div
           class="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-x-14"
