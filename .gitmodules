@@ -1,0 +1,3 @@
+[submodule "vendor/klepon-brand"]
+	path = vendor/klepon-brand
+	url = /home/amiw/projects/klepon-brand
